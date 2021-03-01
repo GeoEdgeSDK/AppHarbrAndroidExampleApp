@@ -3,10 +3,10 @@ package com.geoedge.example.app;
 
 import android.os.Bundle;
 
-import com.geoedge.sdk.engine.GEEvents;
 import com.geoedge.sdk.engine.GeoEdge;
 import com.geoedge.sdk.engine.InitializationFailureReason;
-import com.geoedge.sdk.engine.OnGeoEdgeInitializationCompleteListener;
+import com.geoedge.sdk.engine.listeners.GEEvents;
+import com.geoedge.sdk.engine.listeners.OnGeoEdgeInitializationCompleteListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -28,7 +28,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String API_KEY = "api_key";
     private PublisherAdView publisherAdView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 //      **** (1) ****
 //      Initialize Google Ad Manager
-        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("AF7FF64A7B4DBED0EB448F3423068279"))
+        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("10F1A1FB2184A2EA6B4CB2F05DA57ED1"))
                 .build());
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -55,34 +57,34 @@ public class MainActivity extends AppCompatActivity {
 
 //      **** (4) ****
 //      Initialize GeoEdge SDK
-        GeoEdge.initialize(getApplicationContext(), "API_KEY", new OnGeoEdgeInitializationCompleteListener() {
+        GeoEdge.initialize(getApplicationContext(), API_KEY, new OnGeoEdgeInitializationCompleteListener() {
             @Override
             public void onSuccess() {
                 Log.d("LOG", "onSuccess");
             }
 
             @Override
-            public void onFailure(@NonNull InitializationFailureReason reason) {
-                Log.d("LOG", "onFailure client Listener: " + reason.getReadableHumanReason());
+            public void onFailure(@NonNull InitializationFailureReason initializationFailureReason) {
+                Log.d("LOG", "onFailure client Listener: " + initializationFailureReason.getReadableHumanReason());
             }
         });
 
 //      **** (5) ****
 //      Add the adView instance to GeoEdge for Monitoring
-        GeoEdge.addView(publisherAdView, new GEEvents() {
+        GeoEdge.addBannerView(publisherAdView, new GEEvents.GEBannerEvents() {
             @Override
-            public void onAdBlocked(@NonNull ViewGroup view) {
-                Log.d("LOG", "onAdBlocked");
+            public void onBannerAdBlocked(@NonNull ViewGroup viewGroup) {
+                Log.d("LOG", "GeoEdge - onAdBlocked");
             }
 
             @Override
-            public void onAdReported(@NonNull ViewGroup view) {
-                Log.d("LOG", "onAdReported");
+            public void onBannerAdReported(@NonNull ViewGroup viewGroup) {
+                Log.d("LOG", "GeoEdge - onAdReported");
             }
 
             @Override
-            public void onImpression(@NonNull ViewGroup view) {
-                Log.d("LOG", "onImpression");
+            public void onBannerImpression(@NonNull ViewGroup viewGroup) {
+                Log.d("LOG", "GeoEdge - onImpression");
             }
         });
 
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
 //      **** (7) ****
 //      Remove the view on Destroy
-        GeoEdge.removeView(publisherAdView);
+        GeoEdge.removeBannerView(publisherAdView);
     }
 
     AdListener mAdListener = new AdListener() {
@@ -112,32 +114,32 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onAdLoaded() {
-            Log.d("LOG", "onAdLoaded");
+            Log.d("LOG", "GAM - onAdLoaded");
         }
 
         @Override
         public void onAdFailedToLoad(LoadAdError adError) {
-            Log.d("LOG", "onAdFailedToLoad: " + adError.getMessage());
+            Log.d("LOG", "GAM - onAdFailedToLoad: " + adError.getMessage());
         }
 
         @Override
         public void onAdOpened() {
-            Log.d("LOG", "onAdOpened");
+            Log.d("LOG", "GAM - onAdOpened");
         }
 
         @Override
         public void onAdClicked() {
-            Log.d("LOG", "onAdClicked");
+            Log.d("LOG", "GAM - onAdClicked");
         }
 
         @Override
         public void onAdLeftApplication() {
-            Log.d("LOG", "onAdLeftApplication");
+            Log.d("LOG", "GAM - onAdLeftApplication");
         }
 
         @Override
         public void onAdClosed() {
-            Log.d("LOG", "onAdClosed");
+            Log.d("LOG", "GAM - onAdClosed");
         }
     };
 }
