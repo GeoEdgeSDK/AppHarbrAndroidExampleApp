@@ -46,3 +46,4 @@ example/target
 example/gen
 
 *.map
+*.aar
