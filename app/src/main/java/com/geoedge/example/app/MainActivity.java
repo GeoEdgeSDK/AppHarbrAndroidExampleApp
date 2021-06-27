@@ -3,6 +3,8 @@ package com.geoedge.example.app;
 
 import android.os.Bundle;
 
+import com.geoedge.sdk.engine.AdBlockReason;
+import com.geoedge.sdk.engine.AdSdk;
 import com.geoedge.sdk.engine.GeoEdge;
 import com.geoedge.sdk.engine.InitializationFailureReason;
 import com.geoedge.sdk.engine.listeners.GEEvents;
@@ -20,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -38,24 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //      **** (1) ****
-//      Initialize Google Ad Manager
-        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("10F1A1FB2184A2EA6B4CB2F05DA57ED1"))
-                .build());
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-//      **** (2) ****
-//      Get the AdView
-        publisherAdView = findViewById(R.id.ad_view);
-
-//      **** (3) ****
-//      Set your ad listener for Google Ad Manager events
-        publisherAdView.setAdListener(mAdListener);
-
-//      **** (4) ****
 //      Initialize GeoEdge SDK
         GeoEdge.initialize(getApplicationContext(), API_KEY, new OnGeoEdgeInitializationCompleteListener() {
             @Override
@@ -69,29 +54,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//      **** (5) ****
+//      **** (2) ****
+//      Get the GAM AdView
+        publisherAdView = findViewById(R.id.ad_view);
+
+//      **** (3) ****
+//      Set your ad listener for Google Ad Manager events
+        publisherAdView.setAdListener(mAdListener);
+
+//      **** (4) ****
 //      Add the adView instance to GeoEdge for Monitoring
-        GeoEdge.addBannerView(publisherAdView, new GEEvents.GEBannerEvents() {
+        GeoEdge.addBannerView(AdSdk.GAM, publisherAdView, new GEEvents.GEBannerEvents() {
+
             @Override
-            public void onBannerAdBlocked(@NonNull ViewGroup viewGroup) {
-                Log.d("LOG", "GeoEdge - onAdBlocked");
+            public void onBannerAdBlocked(@NonNull View view, AdBlockReason reason) {
+                Log.d("LOG", "GeoEdge - onBannerAdBlocked");
             }
 
             @Override
-            public void onBannerAdReported(@NonNull ViewGroup viewGroup) {
-                Log.d("LOG", "GeoEdge - onAdReported");
+            public void onBannerAdReported(@NonNull View view, AdBlockReason reason) {
+                Log.d("LOG", "GeoEdge - onBannerAdReported");
             }
 
             @Override
-            public void onBannerImpression(@NonNull ViewGroup viewGroup) {
-                Log.d("LOG", "GeoEdge - onImpression");
+            public void onBannerImpression(@NonNull View view) {
+                Log.d("LOG", "GeoEdge - onBannerImpression");
             }
         });
 
+//      **** (5) ****
+//      Initialize Google Ad Manager
+        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("10F1A1FB2184A2EA6B4CB2F05DA57ED1"))
+                .build());
+        MobileAds.initialize(this, initializationStatus -> {
 //      **** (6) ****
 //      Request for the Ads
-        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
-        publisherAdView.loadAd(adRequest);
+            PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+            publisherAdView.loadAd(adRequest);
+
+        });
     }
 
     @Override
@@ -101,15 +102,15 @@ public class MainActivity extends AppCompatActivity {
 //      **** (7) ****
 //      Remove the view on Destroy
         GeoEdge.removeBannerView(publisherAdView);
+        publisherAdView.destroy();
     }
 
-    AdListener mAdListener = new AdListener() {
+    private final AdListener mAdListener = new AdListener() {
 
         @Override
         public void onAdImpression() {
             super.onAdImpression();
-            Log.d("LOG", "onAdImpression");
-
+            Log.d("LOG", "GAM - onAdImpression");
         }
 
         @Override
