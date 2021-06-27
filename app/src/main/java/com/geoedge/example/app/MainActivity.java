@@ -31,6 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO: Publisher please write your GeoEdge API Key
     private final String API_KEY = "api_key";
     private PublisherAdView publisherAdView;
 
@@ -84,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
 //      **** (5) ****
 //      Initialize Google Ad Manager
-        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("10F1A1FB2184A2EA6B4CB2F05DA57ED1"))
-                .build());
         MobileAds.initialize(this, initializationStatus -> {
 //      **** (6) ****
 //      Request for the Ads
