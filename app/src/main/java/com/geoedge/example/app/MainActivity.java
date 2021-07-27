@@ -3,6 +3,7 @@ package com.geoedge.example.app;
 
 import android.os.Bundle;
 
+import com.geoedge.sdk.configuration.GESdkConfiguration;
 import com.geoedge.sdk.engine.AdBlockReason;
 import com.geoedge.sdk.engine.AdSdk;
 import com.geoedge.sdk.engine.GeoEdge;
@@ -43,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
 //      **** (1) ****
 //      Initialize GeoEdge SDK
-        GeoEdge.initialize(getApplicationContext(), API_KEY, new OnGeoEdgeInitializationCompleteListener() {
+        GESdkConfiguration geSdkConfiguration = new GESdkConfiguration.Builder(API_KEY)
+                .withAdNetworksToMonitor(new AdSdk[]{ AdSdk.MOPUB, AdSdk.ADMOB, AdSdk.GAM, AdSdk.FACEBOOK, AdSdk.CHARTBOOST })
+                .build();
+
+        GeoEdge.initialize(getApplicationContext(), geSdkConfiguration, new OnGeoEdgeInitializationCompleteListener() {
             @Override
             public void onSuccess() {
                 Log.d("LOG", "onSuccess");
