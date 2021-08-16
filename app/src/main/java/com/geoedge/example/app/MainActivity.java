@@ -71,20 +71,14 @@ public class MainActivity extends AppCompatActivity {
 //      **** (4) ****
 //      Add the adView instance to GeoEdge for Monitoring
         GeoEdge.addBannerView(AdSdk.GAM, publisherAdView, new GEEvents.GEBannerEvents() {
-
             @Override
-            public void onBannerAdBlocked(@NonNull View view, AdBlockReason reason) {
-                Log.d("LOG", "GeoEdge - onBannerAdBlocked");
+            public void onBannerAdBlocked(@NonNull View view, @NonNull AdBlockReason[] adBlockReasons) {
+                Log.d("LOG", "GeoEdge - onBannerAdBlocked - with reasons: " + Arrays.toString(adBlockReasons));
             }
 
             @Override
-            public void onBannerAdReported(@NonNull View view, AdBlockReason reason) {
-                Log.d("LOG", "GeoEdge - onBannerAdReported");
-            }
-
-            @Override
-            public void onBannerImpression(@NonNull View view) {
-                Log.d("LOG", "GeoEdge - onBannerImpression");
+            public void onBannerAdReported(@NonNull View view, @NonNull AdBlockReason[] adBlockReasons) {
+                Log.d("LOG", "GeoEdge - onBannerAdReported - with reasons: " + Arrays.toString(adBlockReasons));
             }
         });
 
