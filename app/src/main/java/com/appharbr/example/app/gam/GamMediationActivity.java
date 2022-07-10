@@ -17,6 +17,7 @@ public class GamMediationActivity extends AppCompatActivity {
     private Button btnInterstitial;
     private Button btnRewarded;
     private Button btnNative;
+    private Button btnNativeAndBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,10 @@ public class GamMediationActivity extends AppCompatActivity {
         btnNative = findViewById(R.id.gam_native);
         btnNative.setOnClickListener((view) ->{
             GamMediationActivity.this.startActivity(new Intent(GamMediationActivity.this, GamNativeAdActivity.class));
+        });
+        btnNativeAndBanner = findViewById(R.id.gam_native_and_banner);
+        btnNativeAndBanner.setOnClickListener((view) ->{
+            GamMediationActivity.this.startActivity(new Intent(GamMediationActivity.this, GamCombinationNativeAdWithBannerActivity.class));
         });
     }
 

@@ -42,5 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/gam_native" />
+        <Button
+            android:id="@+id/gam_native_and_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/gam_native_and_banner" />
     </LinearLayout>
 </RelativeLayout>

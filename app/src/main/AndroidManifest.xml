@@ -68,6 +68,10 @@
             android:name="com.appharbr.example.app.gam.GamNativeAdActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name="com.appharbr.example.app.gam.GamCombinationNativeAdWithBannerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
