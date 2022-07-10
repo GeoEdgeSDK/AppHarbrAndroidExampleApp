@@ -1,5 +1,38 @@
 <resources>
-    <string name="app_name">GeoEdgeExampleApp</string>
+    <string name="app_name">AppHarbrExampleApp</string>
+    <string name="ad_attribution">Ad</string>
+
+    <string name="gam_banner_screen">Google Ad Manager (GAM) Banner Sample</string>
+    <string name="gam_interstitial_screen">Google Ad Manager (GAM) Interstitial Sample</string>
+    <string name="gam_rewarded_screen">Google Ad Manager (GAM) Rewarded Sample</string>
+    <string name="admob_banner_screen">AdMob Banner Sample</string>
+    <string name="admob_interstitial_screen">AdMob Interstitial Sample</string>
+    <string name="admob_rewarded_screen">AdMob Rewarded Sample</string>
+
+
+
     <!-- TODO: This is an ad unit ID for a test ad. Replace with your own banner ad unit id. -->
-    <string name="ad_unit_id">/6499/example/banner</string>
+    <string name="gam_banner_ad_unit_id">/6499/example/banner</string>
+    <string name="gam_interstitial_ad_unit_id">/6499/example/interstitial</string>
+    <string name="gam_rewarded_ad_unit_id">/6499/example/rewarded</string>
+    <string name="gam_native_ad_unit_id">/6499/example/native</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_rewarded_ad_unit_id">	ca-app-pub-3940256099942544/5224354917</string>
+    <string name="admob_native_ad_unit_id">ca-app-pub-3940256099942544/2247696110</string>
+
+    <string name="display_interstitial">Display Interstitial</string>
+    <string name="display_rewarded">Display Rewarded</string>
+
+
+    <string name="gam_mediation">Google Ad Manager (GAM)</string>
+    <string name="admob_mediation">AdMob</string>
+    <string name="gam_banner">Banner</string>
+    <string name="gam_interstitial">Interstitial</string>
+    <string name="gam_rewarded">Rewarded</string>
+    <string name="gam_native">Native</string>
+    <string name="admob_banner">banner</string>
+    <string name="admob_interstitial">Interstitial</string>
+    <string name="admob_rewarded">Rewarded</string>
+    <string name="admob_native">Native</string>
 </resources>
