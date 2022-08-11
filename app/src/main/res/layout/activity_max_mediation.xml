@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
     tools:ignore="UselessParent">
 
@@ -38,9 +38,9 @@
         android:text="@string/native_ad" />
 
     <Button
-        android:id="@+id/max_banner_recycler_view"
+        android:id="@+id/max_recycler_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/banner_recycler_view" />
+        android:text="@string/max_recycler_view" />
 </LinearLayout>

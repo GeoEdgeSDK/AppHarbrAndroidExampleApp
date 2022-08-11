@@ -65,13 +65,24 @@
         <activity
             android:name="com.appharbr.example.app.gam.GamCombinationNativeAdWithBannerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".max.MaxMediationActivity"
-            android:exported="false" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".max.MaxBannerActivity"
-            android:exported="false" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".max.MaxRecyclerViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".max.MaxRewardedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".max.MaxNativeAdActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".max.MaxInterstitialActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

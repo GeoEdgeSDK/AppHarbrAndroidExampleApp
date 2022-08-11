@@ -4,17 +4,15 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.appharbr.example.app.databinding.ActivityMaxBannerBinding;
+import com.appharbr.example.app.databinding.ActivityMaxInterstitialBinding;
 
-public class MaxBannerActivity extends AppCompatActivity {
+public class MaxInterstitialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 
-	ActivityMaxBannerBinding binding = ActivityMaxBannerBinding.inflate(getLayoutInflater());
+	ActivityMaxInterstitialBinding binding = ActivityMaxInterstitialBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
-
-
     }
 }

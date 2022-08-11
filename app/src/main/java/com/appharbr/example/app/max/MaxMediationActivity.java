@@ -1,5 +1,6 @@
 package com.appharbr.example.app.max;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,24 +12,30 @@ public class MaxMediationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+
 	ActivityMaxMediationBinding binding = ActivityMaxMediationBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	/*btnBanner = findViewById(R.id.admob_banner);
-	btnBanner.setOnClickListener((view) ->{
-	    AdMobMediationActivity.this.startActivity(new Intent(AdMobMediationActivity.this, AdMobBannerActivity.class));
+	binding.maxBanner.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxBannerActivity.class));
 	});
-	btnInterstitial = findViewById(R.id.admob_interstitial);
-	btnInterstitial.setOnClickListener((view) ->{
-	    AdMobMediationActivity.this.startActivity(new Intent(AdMobMediationActivity.this, AdMobInterstitialActivity.class));
+
+	binding.maxInterstitial.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxInterstitialActivity.class));
 	});
-	btnRewarded = findViewById(R.id.admob_rewarded);
-	btnRewarded.setOnClickListener((view) ->{
-	    AdMobMediationActivity.this.startActivity(new Intent(AdMobMediationActivity.this, AdMobRewardedActivity.class));
+
+	binding.maxRewarded.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxRewardedActivity.class));
 	});
-	btnNative = findViewById(R.id.admob_native);
-	btnNative.setOnClickListener((view) ->{
-	    AdMobMediationActivity.this.startActivity(new Intent(AdMobMediationActivity.this, AdMobNativeAdActivity.class));
-	});*/
+
+	binding.maxNative.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxNativeAdActivity.class));
+	});
+
+	binding.maxRecyclerView.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxRecyclerViewActivity.class));
+	});
+
     }
+
 }
