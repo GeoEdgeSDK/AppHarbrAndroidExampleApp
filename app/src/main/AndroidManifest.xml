@@ -77,7 +77,7 @@
             android:name=".max.MaxBannerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".max.MaxRecyclerViewActivity"
+            android:name=".max.MaxBannerRecyclerViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".max.MaxRewardedActivity"

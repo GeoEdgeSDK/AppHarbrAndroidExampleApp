@@ -33,7 +33,7 @@ public class MaxMediationActivity extends AppCompatActivity {
 	});
 
 	binding.maxRecyclerView.setOnClickListener((view) -> {
-	    startActivity(new Intent(MaxMediationActivity.this, MaxRecyclerViewActivity.class));
+	    startActivity(new Intent(MaxMediationActivity.this, MaxBannerRecyclerViewActivity.class));
 	});
 
     }
