@@ -38,7 +38,7 @@ public class MaxInterstitialActivity extends AppCompatActivity {
 	//Initialize max interstitial Ad
 	maxInterstitialAd = new MaxInterstitialAd("YOUR_AD_UNIT_ID", this);
 
-	// The publisher will initiate once the listener wrapper and will use it when load the AdMob interstitial ad.
+	// The publisher will initiate once the listener wrapper and will use it when load the Max interstitial ad.
 	MaxAdListener ahWrapperListener = AppHarbr.addInterstitial(AdSdk.MAX,
 		maxInterstitialAd,
 		maxAdListener,
