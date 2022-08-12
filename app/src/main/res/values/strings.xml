@@ -35,5 +35,6 @@
     <string name="interstitial">Interstitial</string>
     <string name="rewarded">Rewarded</string>
     <string name="native_ad">Native</string>
-    <string name="max_recycler_view">RecyclerView with banner</string>
+    <string name="max_recycler_view">RecyclerView with banner Ad</string>
+    <string name="max_recycler_view_native">RecyclerView with Native Ad</string>
 </resources>

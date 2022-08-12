@@ -36,6 +36,10 @@ public class MaxMediationActivity extends AppCompatActivity {
 	    startActivity(new Intent(MaxMediationActivity.this, MaxBannerRecyclerViewActivity.class));
 	});
 
+	binding.maxRecyclerViewNative.setOnClickListener((view) -> {
+	    startActivity(new Intent(MaxMediationActivity.this, MaxNativeRecyclerViewActivity.class));
+	});
+
     }
 
 }

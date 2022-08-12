@@ -80,6 +80,9 @@
             android:name=".max.MaxBannerRecyclerViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".max.MaxNativeRecyclerViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".max.MaxRewardedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

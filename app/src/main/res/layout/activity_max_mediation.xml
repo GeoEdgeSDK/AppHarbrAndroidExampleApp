@@ -43,4 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/max_recycler_view" />
+
+    <Button
+        android:id="@+id/max_recycler_view_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/max_recycler_view_native" />
+
 </LinearLayout>
