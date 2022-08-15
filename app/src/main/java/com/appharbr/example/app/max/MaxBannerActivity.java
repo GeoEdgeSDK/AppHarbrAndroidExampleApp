@@ -46,9 +46,6 @@ public class MaxBannerActivity extends AppCompatActivity {
 	binding.maxAdViewBanner.startAutoRefresh();
     }
 
-    private final AHListener ahListener = (view, unitId, adFormat, reasons)
-	    -> Log.d("LOG", "AppHarbr - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
-
     private final MaxAdViewAdListener mAdListener = new MaxAdViewAdListener() {
 
 	@Override
@@ -91,4 +88,8 @@ public class MaxBannerActivity extends AppCompatActivity {
 	    Log.d("LOG", "Max - onAdDisplayFailed");
 	}
     };
+
+    private final AHListener ahListener = (view, unitId, adFormat, reasons)
+	    -> Log.d("LOG", "AppHarbr - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
+
 }

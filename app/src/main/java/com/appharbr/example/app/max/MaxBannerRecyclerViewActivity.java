@@ -38,11 +38,13 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 	binding = ActivityMaxRecyclerViewBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
+	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
 
-	//Setup recyclerview
+	//	**** (2) ****
+	//Create Adapter and Setup recyclerview
 	binding.adRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 	binding.adRecyclerView.setAdapter(new AdRecyclerViewAdapter());
     }
@@ -63,7 +65,9 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 
 	public void onViewRecycled(@NotNull AdAdapterViewHolder holder) {
 	    super.onViewRecycled(holder);
-	    //We need to clear banner to avoid memory leaks
+
+	    //	**** (3) ****
+	    //Clear banner to avoid memory leaks
 	    holder.clearBanner();
 	}
 
@@ -78,7 +82,8 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 
 	private final RecyclerViewItemBannerBinding itemBinding;
 
-	//We need to save banner to clear when RecyclerView's onViewRecycled is called to avoid memory leaks
+	//	**** (4) ****
+	//Create banner field to clear when RecyclerView's onViewRecycled is called to avoid memory leaks
 	private MaxAdView currentBannerAdView;
 
 	public AdAdapterViewHolder(@NotNull RecyclerViewItemBannerBinding itemBinding) {
@@ -86,6 +91,8 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 	    this.itemBinding = itemBinding;
 	}
 
+	//	**** (5) ****
+	//Create banner manually
 	public final void bindHolder() {
 	    //MaxAdView creation manually
 	    currentBannerAdView = new MaxAdView("YOUR_AD_UNIT_ID", itemView.getContext());
@@ -117,7 +124,7 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 	    });
 
 	    //Add Max's banner adView instance for Monitoring
-	    //Added Lifecycle is important to avoid memory leaks
+	    //Adding Lifecycle is important to avoid memory leaks
 	    AppHarbr.addBannerView(AdSdk.MAX, currentBannerAdView, getLifecycle(), ahListener);
 
 	    //Load banner
@@ -128,6 +135,7 @@ public class MaxBannerRecyclerViewActivity extends AppCompatActivity {
 
 	public final void clearBanner() {
 	    if (currentBannerAdView != null) {
+		//	**** (6) ****
 		//This step is necessary to avoid memory leaks
 		AppHarbr.removeBannerView(currentBannerAdView);
 	    }

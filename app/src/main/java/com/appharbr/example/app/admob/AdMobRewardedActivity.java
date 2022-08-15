@@ -84,7 +84,7 @@ public class AdMobRewardedActivity extends AppCompatActivity {
     }
 
     private final AHListener ahListener = (view, unitId, adFormat, reasons)
-            -> Log.d("LOG", "GeoEdge - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
+            -> Log.d("LOG", "AppHarbr - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
 
     private final RewardedAdLoadCallback mRewardedLoadCallback = new RewardedAdLoadCallback() {
 
