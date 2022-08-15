@@ -25,20 +25,19 @@ public class MaxBannerActivity extends AppCompatActivity {
 	ActivityMaxBannerBinding binding = ActivityMaxBannerBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
 
-	//	**** (2) ****
+	//	**** (1) ****
 	//Set your ad listener for Max events
 	binding.maxAdViewBanner.setListener(mAdListener);
 
-	//      **** (3) ****
+	//      **** (2) ****
 	//Add Max's banner adView instance for Monitoring
 	AppHarbr.addBannerView(AdSdk.MAX, binding.maxAdViewBanner, getLifecycle(), ahListener);
 
-	//      **** (4) ****
+	//      **** (3) ****
 	//Star loading Ads
 	binding.maxAdViewBanner.loadAd();
 

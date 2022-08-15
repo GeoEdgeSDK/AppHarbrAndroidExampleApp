@@ -28,16 +28,15 @@ public class MaxNativeAdActivity extends AppCompatActivity {
 	ActivityMaxNativeAdBinding binding = ActivityMaxNativeAdBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
 
-	//	**** (2) ****
+	//	**** (1) ****
 	//Create Max native ad loader
 	final MaxNativeAdLoader maxNativeAdLoader = new MaxNativeAdLoader("YOUR_AD_UNIT_ID", this);
 
-	//	**** (3) ****
+	//	**** (2) ****
 	//Set listener to get results
 	maxNativeAdLoader.setNativeAdListener(new MaxNativeAdListener() {
 
@@ -48,7 +47,7 @@ public class MaxNativeAdActivity extends AppCompatActivity {
 		//hiding progressBar cause ad is already loaded
 		binding.progressBar.setVisibility(View.GONE);
 
-		//	**** (4) ****
+		//	**** (3) ****
 		//Check loaded Max native ad from AppHarbr if it needs to be blocked
 		AdResult adResult = AppHarbr.shouldBlockNativeAd(AdSdk.MAX, maxAd);
 		if (adResult.getAdStateResult() != AdStateResult.BLOCKED) {
@@ -66,7 +65,7 @@ public class MaxNativeAdActivity extends AppCompatActivity {
 
 	});
 
-	//	**** (5) ****
+	//	**** (4) ****
 	//And finally load Max native Ad
 	maxNativeAdLoader.loadAd();
     }

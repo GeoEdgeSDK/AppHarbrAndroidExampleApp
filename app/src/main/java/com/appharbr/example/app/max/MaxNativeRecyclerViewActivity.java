@@ -31,7 +31,6 @@ public class MaxNativeRecyclerViewActivity extends AppCompatActivity {
 	binding = ActivityMaxRecyclerViewBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
@@ -45,11 +44,11 @@ public class MaxNativeRecyclerViewActivity extends AppCompatActivity {
 	settings.addFixedPosition(2);
 	settings.setRepeatingInterval(3);
 
-	//	**** (2) ****
+	//	**** (1) ****
 	//Appharbr only requires AHMaxRecyclerAdapterWrapper to scan loaded Ads
 	ahMaxRecyclerAdapter = new AHMaxRecyclerAdapterWrapper(
 		settings,
-		new AdRecyclerViewAdapter(), //regular adapter. (Review step 3)
+		new AdRecyclerViewAdapter(), //regular adapter. (Review step 2)
 		this);
 
 	ahMaxRecyclerAdapter.setListener(new MaxAdPlacer.Listener() {
@@ -66,16 +65,16 @@ public class MaxNativeRecyclerViewActivity extends AppCompatActivity {
 	ahMaxRecyclerAdapter.getAdPlacer().setAdSize(-1, AppLovinSdkUtils.dpToPx(this, 200));
 	binding.adRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-	//	**** (4) ****
-	// Set ahMaxRecyclerAdapter created above (Step 2) instead of regular one
+	//	**** (3) ****
+	// Set ahMaxRecyclerAdapter created above (Step 1) instead of regular one
 	binding.adRecyclerView.setAdapter(ahMaxRecyclerAdapter);
 
-	//	**** (5) ****
+	//	**** (4) ****
 	// Load Ads
 	ahMaxRecyclerAdapter.loadAds();
     }
 
-    //	**** (3) ****
+    //	**** (2) ****
     //Create regular adapter
     private static class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAdapter.AdAdapterViewHolder> {
 

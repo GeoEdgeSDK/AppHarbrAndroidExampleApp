@@ -31,16 +31,15 @@ public class MaxInterstitialActivity extends AppCompatActivity {
 	binding = ActivityMaxInterstitialBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
 
-	//	**** (2) ****
+	//	**** (1) ****
 	//Initialize max interstitial Ad
 	maxInterstitialAd = new MaxInterstitialAd("YOUR_AD_UNIT_ID", this);
 
-	//	**** (3) ****
+	//	**** (2) ****
 	// The publisher will initiate once the listener wrapper and will use it when load the Max interstitial ad.
 	MaxAdListener ahWrapperListener = AppHarbr.addInterstitial(AdSdk.MAX,
 		maxInterstitialAd,
@@ -48,7 +47,7 @@ public class MaxInterstitialActivity extends AppCompatActivity {
 		getLifecycle(),
 		ahListener);
 
-	//	**** (4) ****
+	//	**** (3) ****
 	//Set ahWrapperListener and load Ad
 	maxInterstitialAd.setListener(ahWrapperListener);
 	maxInterstitialAd.loadAd();
@@ -65,7 +64,7 @@ public class MaxInterstitialActivity extends AppCompatActivity {
 	}
 
 	private void checkAd() {
-	    //	**** (5) ****
+	    //	**** (4) ****
 	    //Check whether Ad was blocked or not
 	    final AdStateResult interstitialState = AppHarbr.getInterstitialState(maxInterstitialAd);
 	    if (interstitialState != AdStateResult.BLOCKED) {

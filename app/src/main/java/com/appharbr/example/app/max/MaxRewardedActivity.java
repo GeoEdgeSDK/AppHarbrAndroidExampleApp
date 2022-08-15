@@ -32,16 +32,15 @@ public class MaxRewardedActivity extends AppCompatActivity {
 	binding = ActivityMaxRewardedBinding.inflate(getLayoutInflater());
 	setContentView(binding.getRoot());
 
-	//	**** (1) ****
 	//Initialize AppLovinSdk
 	AppLovinSdk.getInstance(this).setMediationProvider("max");
 	AppLovinSdk.initializeSdk(this);
 
-	//	**** (2) ****
+	//	**** (1) ****
 	//Initialize max Rewarded Ad
 	maxRewardedAd = MaxRewardedAd.getInstance("YOUR_AD_UNIT_ID", this);
 
-	//	**** (3) ****
+	//	**** (2) ****
 	// The publisher will initiate once the listener wrapper and will use it when load the Max rewarded ad.
 	MaxRewardedAdListener ahWrapperListener = AppHarbr.addRewardedAd(AdSdk.MAX,
 		maxRewardedAd,
@@ -49,7 +48,7 @@ public class MaxRewardedActivity extends AppCompatActivity {
 		getLifecycle(),
 		ahListener);
 
-	//	**** (4) ****
+	//	**** (3) ****
 	//Set ahWrapperListener and load Ad
 	maxRewardedAd.setListener(ahWrapperListener);
 	maxRewardedAd.loadAd();
@@ -67,7 +66,7 @@ public class MaxRewardedActivity extends AppCompatActivity {
 	}
 
 	private void checkAd() {
-	    //	**** (5) ****
+	    //	**** (4) ****
 	    //Check whether Ad was blocked or not
 	    final AdStateResult rewardedState = AppHarbr.getRewardedState(maxRewardedAd);
 	    if (rewardedState != AdStateResult.BLOCKED) {
