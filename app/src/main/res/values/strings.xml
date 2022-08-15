@@ -8,8 +8,9 @@
     <string name="admob_banner_screen">AdMob Banner Sample</string>
     <string name="admob_interstitial_screen">AdMob Interstitial Sample</string>
     <string name="admob_rewarded_screen">AdMob Rewarded Sample</string>
-
-
+    <string name="max_banner_screen">Max Banner Sample</string>
+    <string name="max_interstitial_screen">Max Interstitial Sample</string>
+    <string name="max_rewarded_screen">Max Rewarded Sample</string>
 
     <!-- TODO: This is an ad unit ID for a test ad. Replace with your own banner ad unit id. -->
     <string name="gam_banner_ad_unit_id">/6499/example/banner</string>
@@ -28,13 +29,12 @@
 
     <string name="gam_mediation">Google Ad Manager (GAM)</string>
     <string name="admob_mediation">AdMob</string>
-    <string name="gam_banner">Banner</string>
-    <string name="gam_interstitial">Interstitial</string>
-    <string name="gam_rewarded">Rewarded</string>
-    <string name="gam_native">Native</string>
+    <string name="max_mediation">Max Mediation</string>
     <string name="gam_native_and_banner">Combining Custom Native and Banner</string>
-    <string name="admob_banner">banner</string>
-    <string name="admob_interstitial">Interstitial</string>
-    <string name="admob_rewarded">Rewarded</string>
-    <string name="admob_native">Native</string>
+    <string name="banner">banner</string>
+    <string name="interstitial">Interstitial</string>
+    <string name="rewarded">Rewarded</string>
+    <string name="native_ad">Native</string>
+    <string name="max_recycler_view">RecyclerView with banner Ad</string>
+    <string name="max_recycler_view_native">RecyclerView with Native Ad</string>
 </resources>

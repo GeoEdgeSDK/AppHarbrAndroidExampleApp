@@ -86,7 +86,7 @@ public class AdMobInterstitialActivity extends AppCompatActivity {
     }
 
     AHListener ahListener = (view, unitId, adFormat, reasons)
-            -> Log.d("LOG", "GeoEdge - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
+            -> Log.d("LOG", "AppHarbr - onAdBlocked for: " + unitId + ", reason: " + Arrays.toString(reasons));
 
     private final InterstitialAdLoadCallback interstitialAdLoadCallback = new InterstitialAdLoadCallback() {
         @Override

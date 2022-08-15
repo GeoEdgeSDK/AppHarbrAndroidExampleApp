@@ -1,52 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.appharbr.example.app.MediationsActivity">
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/gam_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_marginBottom="16dp"
+        android:text="@string/banner" />
 
-        <Button
-            android:id="@+id/gam_banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/gam_banner" />
+    <Button
+        android:id="@+id/gam_interstitial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/interstitial" />
 
-        <Button
-            android:id="@+id/gam_interstitial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/gam_interstitial" />
+    <Button
+        android:id="@+id/gam_rewarded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/rewarded" />
 
-        <Button
-            android:id="@+id/gam_rewarded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/gam_rewarded" />
+    <Button
+        android:id="@+id/gam_native"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/native_ad" />
 
-        <Button
-            android:id="@+id/gam_native"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/gam_native" />
-        <Button
-            android:id="@+id/gam_native_and_banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/gam_native_and_banner" />
-    </LinearLayout>
-</RelativeLayout>
+    <Button
+        android:id="@+id/gam_native_and_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/gam_native_and_banner" />
+</LinearLayout>
