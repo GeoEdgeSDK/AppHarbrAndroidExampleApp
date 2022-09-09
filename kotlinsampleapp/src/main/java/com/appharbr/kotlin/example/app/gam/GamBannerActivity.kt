@@ -46,7 +46,7 @@ class GamBannerActivity : ComponentActivity() {
 
                                 //      **** (2) ****
                                 //Add Max's banner adView instance for Monitoring
-                                AppHarbr.addBannerView<Lifecycle>(
+                                AppHarbr.addBannerView(
                                     AdSdk.GAM,
                                     this,
                                     lifecycle,
