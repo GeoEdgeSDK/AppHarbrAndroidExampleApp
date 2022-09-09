@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">KotlinSampleApp</string>
+    <string name="title_activity_gam_mediation">GamMediationActivity</string>
+    <string name="title_activity_gam_banner">GamBannerActivity</string>
+
+
+    <!-- TODO: This is an ad unit ID for a test ad. Replace with your own banner ad unit id. -->
+    <string name="gam_banner_ad_unit_id">/6499/example/banner</string>
+    <string name="gam_interstitial_ad_unit_id">/6499/example/interstitial</string>
+    <string name="gam_rewarded_ad_unit_id">/6499/example/rewarded</string>
+    <string name="gam_native_ad_unit_id">/6499/example/native</string>
+    <string name="gam_nativebanner_ad_unit_id">/6499/example/nativeandbanner</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_rewarded_ad_unit_id">	ca-app-pub-3940256099942544/5224354917</string>
+    <string name="admob_native_ad_unit_id">ca-app-pub-3940256099942544/2247696110</string>
+
 </resources>

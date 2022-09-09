@@ -1,4 +1,4 @@
-package com.appharbr.kotlin.example.app
+package com.appharbr.kotlin.example.app.gam
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,10 +14,9 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.appharbr.kotlin.example.app.gam.GamMediationActivity
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 
-class MediationsActivity : ComponentActivity() {
+class GamMediationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,7 +28,6 @@ class MediationsActivity : ComponentActivity() {
                 ) {
 
                     val context = LocalContext.current
-
                     Row(
                         modifier = Modifier.fillMaxSize(),
                         horizontalArrangement = Arrangement.Center,
@@ -41,15 +39,14 @@ class MediationsActivity : ComponentActivity() {
                                 context.startActivity(
                                     Intent(
                                         context,
-                                        GamMediationActivity::class.java
+                                        GamBannerActivity::class.java
                                     )
                                 )
                             }) {
-                            Text(text = "Admob")
+                            Text(text = "Banner")
                         }
 
                     }
-
                 }
             }
         }
