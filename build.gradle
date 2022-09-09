@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        compose_version = '1.2.0'
+    }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin"
     }
