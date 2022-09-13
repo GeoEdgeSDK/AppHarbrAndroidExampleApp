@@ -46,6 +46,18 @@ class GamMediationActivity : ComponentActivity() {
                             Text(text = "Banner")
                         }
 
+                        Button(
+                            onClick = {
+                                context.startActivity(
+                                    Intent(
+                                        context,
+                                        GamNativeAdActivity::class.java
+                                    )
+                                )
+                            }) {
+                            Text(text = "Native")
+                        }
+
                     }
                 }
             }
