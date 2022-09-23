@@ -50,6 +50,14 @@
             android:name=".gam.GamNativeAdActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".admob.AdmobMediationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".max.MaxMediationActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

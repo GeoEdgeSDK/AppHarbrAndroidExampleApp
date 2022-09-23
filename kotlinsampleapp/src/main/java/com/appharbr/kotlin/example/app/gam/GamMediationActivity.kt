@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -33,10 +32,11 @@ class GamMediationActivity : ComponentActivity() {
                 ) {
 
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 300.dp, bottom = 300.dp),
-                        verticalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(
+                            15.dp,
+                            Alignment.CenterVertically
+                        ),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
