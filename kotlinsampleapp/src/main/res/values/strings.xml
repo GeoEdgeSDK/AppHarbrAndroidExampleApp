@@ -5,6 +5,7 @@
     <string name="gam_interstitial_screen">Google Ad Manager (GAM) Interstitial Sample</string>
     <string name="gam_rewarded_screen">Google Ad Manager (GAM) Rewarded Sample</string>
     <string name="gam_native_screen">Google Ad Manager (GAM) Native Sample</string>
+    <string name="gam_native_and_banner">Combined Custom Native and Banner Sample</string>
     <string name="admob_banner_screen">AdMob Banner Sample</string>
     <string name="admob_interstitial_screen">AdMob Interstitial Sample</string>
     <string name="admob_rewarded_screen">AdMob Rewarded Sample</string>

@@ -51,6 +51,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".gam.GamCombinationNativeAdWithBannerActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".admob.AdmobMediationActivity"
             android:exported="false" />
 

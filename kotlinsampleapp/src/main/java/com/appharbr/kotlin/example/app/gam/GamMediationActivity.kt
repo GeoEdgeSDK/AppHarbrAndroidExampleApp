@@ -44,6 +44,10 @@ class GamMediationActivity : ComponentActivity() {
                         AdFormatButton("Interstitial", GamInterstitialActivity::class.java)
                         AdFormatButton("Rewarded", GamRewardedActivity::class.java)
                         AdFormatButton("Native", GamNativeAdActivity::class.java)
+                        AdFormatButton(
+                            "Combining Custom Native and Banner",
+                            GamCombinationNativeAdWithBannerActivity::class.java
+                        )
 
                     }
                 }
