@@ -1,4 +1,4 @@
-package com.appharbr.kotlin.example.app.gam
+package com.appharbr.kotlin.example.app.admob
 
 import android.os.Bundle
 import android.util.Log
@@ -24,12 +24,12 @@ import com.appharbr.sdk.engine.AdStateResult
 import com.appharbr.sdk.engine.AppHarbr
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 
-class GamNativeAdActivity : ComponentActivity() {
+class AdmobNativeAdActivity : ComponentActivity() {
 
     private val nativeAdState = mutableStateOf<NativeAd?>(null)
 
@@ -59,10 +59,10 @@ class GamNativeAdActivity : ComponentActivity() {
     private fun requestNativeAd() {
         val adLoader = AdLoader.Builder(
             this,
-            applicationContext.resources.getString(R.string.gam_native_ad_unit_id)
+            applicationContext.resources.getString(R.string.admob_native_ad_unit_id)
         ).forNativeAd { nativeAd: NativeAd ->
 
-            val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.GAM, nativeAd)
+            val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.ADMOB, nativeAd)
             when (adResult.adStateResult) {
                 AdStateResult.BLOCKED -> {
                     nativeAdState.value = null
@@ -85,7 +85,7 @@ class GamNativeAdActivity : ComponentActivity() {
             NativeAdOptions.Builder().build()
         ).build()
 
-        adLoader.loadAd(AdManagerAdRequest.Builder().build())
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     @Composable
@@ -99,7 +99,7 @@ class GamNativeAdActivity : ComponentActivity() {
             }
         } ?: kotlin.run {
             Text(
-                text = stringResource(id = R.string.gam_native_screen),
+                text = stringResource(id = R.string.admob_native_screen),
                 fontSize = 20.sp
             )
             CircularProgressIndicator()

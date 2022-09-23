@@ -8,6 +8,7 @@
     <string name="admob_banner_screen">AdMob Banner Sample</string>
     <string name="admob_interstitial_screen">AdMob Interstitial Sample</string>
     <string name="admob_rewarded_screen">AdMob Rewarded Sample</string>
+    <string name="admob_native_screen">Admob Native Sample</string>
     <string name="max_banner_screen">Max Banner Sample</string>
     <string name="max_interstitial_screen">Max Interstitial Sample</string>
     <string name="max_rewarded_screen">Max Rewarded Sample</string>
