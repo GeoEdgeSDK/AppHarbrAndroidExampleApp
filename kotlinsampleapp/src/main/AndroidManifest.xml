@@ -39,6 +39,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".gam.GamInterstitialActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".gam.GamRewardedActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".gam.GamNativeAdActivity"
             android:exported="false" />
 

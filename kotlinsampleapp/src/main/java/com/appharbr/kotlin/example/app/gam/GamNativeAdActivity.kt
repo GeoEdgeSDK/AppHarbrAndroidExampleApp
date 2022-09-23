@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
 import com.appharbr.kotlin.example.app.R
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 import com.appharbr.sdk.engine.AdSdk
@@ -39,7 +45,11 @@ class GamNativeAdActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Row() {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         DisplayNativeAd()
                     }
                 }
@@ -73,10 +83,7 @@ class GamNativeAdActivity : ComponentActivity() {
                 Log.e("LOG", "Handle the failure by logging, altering the UI, and so on.")
             }
         }).withNativeAdOptions(
-            NativeAdOptions.Builder()
-                // Methods in the NativeAdOptions.Builder class can be
-                // used here to specify individual options settings.
-                .build()
+            NativeAdOptions.Builder().build()
         ).build()
 
         adLoader.loadAd(AdManagerAdRequest.Builder().build())
@@ -85,7 +92,12 @@ class GamNativeAdActivity : ComponentActivity() {
     @Composable
     private fun DisplayNativeAd() {
         nativeAdState.value?.let {
-            Text(text = it.body ?: "Empty body")
+            Text(text = "Headline: ${it.headline ?: "Empty Headline"}")
+            Text(text = "Body: ${it.body ?: "Empty body"}")
+            it.icon?.drawable?.toBitmap()?.let { bitmap -> Icon(bitmap.asImageBitmap(), "") }
+            for (image in it.images) {
+                image.drawable?.toBitmap()?.let { bitmap -> Image(bitmap.asImageBitmap(), "") }
+            }
         }
     }
 
