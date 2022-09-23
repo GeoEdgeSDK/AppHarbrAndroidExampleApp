@@ -13,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.appharbr.kotlin.example.app.R
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 import com.appharbr.sdk.engine.AdBlockReason
@@ -51,7 +52,7 @@ class GamRewardedActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = "GAM Rewarded AD")
+                        Text(text = stringResource(id = R.string.gam_rewarded_screen))
 
                         CircularProgressIndicator()
                     }

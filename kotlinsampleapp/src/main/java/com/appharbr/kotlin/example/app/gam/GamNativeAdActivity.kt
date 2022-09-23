@@ -8,15 +8,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.appharbr.kotlin.example.app.R
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
@@ -98,6 +97,12 @@ class GamNativeAdActivity : ComponentActivity() {
             for (image in it.images) {
                 image.drawable?.toBitmap()?.let { bitmap -> Image(bitmap.asImageBitmap(), "") }
             }
+        } ?: kotlin.run {
+            Text(
+                text = stringResource(id = R.string.gam_native_screen),
+                fontSize = 20.sp
+            )
+            CircularProgressIndicator()
         }
     }
 
