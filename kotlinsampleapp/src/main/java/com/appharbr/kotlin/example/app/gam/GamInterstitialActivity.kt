@@ -82,16 +82,6 @@ class GamInterstitialActivity : ComponentActivity() {
         )
     }
 
-    var ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
-            Log.d(
-                "LOG",
-                "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(
-                    reasons
-                )
-            )
-        }
-
     private val adManagerInterstitialAdLoadCallback: AdManagerInterstitialAdLoadCallback =
         object : AdManagerInterstitialAdLoadCallback() {
 
@@ -128,5 +118,15 @@ class GamInterstitialActivity : ComponentActivity() {
             }
         } ?: Log.d("TAG", "The GAM interstitial wasn't loaded yet.")
     }
+
+    var ahListener =
+        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+            Log.d(
+                "LOG",
+                "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(
+                    reasons
+                )
+            )
+        }
 
 }

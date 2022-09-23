@@ -58,6 +58,22 @@
             android:name=".max.MaxMediationActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".admob.AdmobBannerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".admob.AdmobInterstitialActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".admob.AdmobRewardedActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".admob.AdmobNativeAdActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

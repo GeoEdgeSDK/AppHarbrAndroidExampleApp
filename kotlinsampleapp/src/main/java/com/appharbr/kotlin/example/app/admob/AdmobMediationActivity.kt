@@ -16,10 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.appharbr.kotlin.example.app.gam.GamBannerActivity
-import com.appharbr.kotlin.example.app.gam.GamInterstitialActivity
-import com.appharbr.kotlin.example.app.gam.GamNativeAdActivity
-import com.appharbr.kotlin.example.app.gam.GamRewardedActivity
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 
 class AdmobMediationActivity : ComponentActivity() {
@@ -45,10 +41,10 @@ class AdmobMediationActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        AdFormatButton("Banner", GamBannerActivity::class.java)
-                        AdFormatButton("Interstitial", GamInterstitialActivity::class.java)
-                        AdFormatButton("Rewarded", GamRewardedActivity::class.java)
-                        AdFormatButton("Native", GamNativeAdActivity::class.java)
+                        AdFormatButton("Banner", AdmobBannerActivity::class.java)
+                        AdFormatButton("Interstitial", AdmobInterstitialActivity::class.java)
+                        AdFormatButton("Rewarded", AdmobRewardedActivity::class.java)
+                        AdFormatButton("Native", AdmobNativeAdActivity::class.java)
 
                     }
                 }
