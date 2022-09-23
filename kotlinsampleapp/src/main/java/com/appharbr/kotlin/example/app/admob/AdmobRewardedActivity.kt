@@ -22,18 +22,18 @@ import com.appharbr.sdk.engine.AdStateResult
 import com.appharbr.sdk.engine.AppHarbr
 import com.appharbr.sdk.engine.adformat.AdFormat
 import com.appharbr.sdk.engine.listeners.AHListener
-import com.appharbr.sdk.engine.mediators.admob.interstitial.AHAdMobInterstitialAd
+import com.appharbr.sdk.engine.mediators.admob.rewarded.AHAdMobRewardedAd
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.admanager.AdManagerAdRequest
-import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import java.util.*
 
-class AdmobInterstitialActivity : ComponentActivity() {
+class AdmobRewardedActivity : ComponentActivity() {
 
-    private val ahAdMobInterstitialAd = AHAdMobInterstitialAd()
-    private var ahWrapperListener: InterstitialAdLoadCallback? = null
+    private val ahAdMobRewardedAd = AHAdMobRewardedAd()
+    private var ahWrapperListener: RewardedAdLoadCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class AdmobInterstitialActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = stringResource(id = R.string.admob_interstitial_screen))
+                        Text(text = stringResource(id = R.string.admob_rewarded_screen))
 
                         CircularProgressIndicator()
                     }
@@ -63,64 +63,72 @@ class AdmobInterstitialActivity : ComponentActivity() {
 
     private fun prepareAppHarbrWrapperListener() {
         //      **** (1) ****
-        // The publisher will initiate the listener wrapper and will use it when load the GAM Interstitial Ad.
-        ahWrapperListener = AppHarbr.addInterstitial<InterstitialAdLoadCallback>(
+        // The publisher will initiate the listener wrapper and will use it when load the GAM Rewarded Ad.
+        ahWrapperListener = AppHarbr.addRewardedAd<RewardedAdLoadCallback>(
             AdSdk.ADMOB,
-            ahAdMobInterstitialAd,
-            interstitialAdLoadCallback,
+            ahAdMobRewardedAd,
+            rewardedLoadCallback,
             ahListener
         )
     }
 
     private fun requestAd() {
         //      **** (2) ****
-        //Request to load interstitial Ad and instead of AdManagerInterstitialAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
-        AdManagerInterstitialAd.load(
-            this,
-            applicationContext.resources.getString(R.string.admob_interstitial_ad_unit_id),
-            AdManagerAdRequest.Builder().build(),
+        //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
+        RewardedAd.load(
+            applicationContext,
+            applicationContext.resources.getString(R.string.admob_rewarded_ad_unit_id),
+            AdRequest.Builder().build(),
             ahWrapperListener
         )
+
     }
 
-    private val interstitialAdLoadCallback: InterstitialAdLoadCallback =
-        object : InterstitialAdLoadCallback() {
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                super.onAdLoaded(interstitialAd)
-                Log.d("LOG", "onAdLoaded")
-                if (isDestroyed) {
-                    return
-                }
-                showAd()
+    private val rewardedLoadCallback: RewardedAdLoadCallback = object : RewardedAdLoadCallback() {
+        override fun onAdLoaded(rewardedAd: RewardedAd) {
+            super.onAdLoaded(rewardedAd)
+            Log.e("TAG", "AdMob - RewardedAdLoadCallback - onAdLoaded")
+            if (isDestroyed) {
+                return
             }
-
-            override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                Log.d("LOG", "onAdFailedToLoad: " + loadAdError.message)
-            }
+            showAd()
         }
 
+        override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+            Log.e(
+                "TAG",
+                "AdMob - RewardedAdLoadCallback - onAdFailedToLoad: " + loadAdError.message
+            )
+        }
+    }
+
     //      **** (3) ****
-    //Check was interstitial Ad blocked or not
+    //Check was rewarded Ad blocked or not
     private fun showAd() {
-        ahAdMobInterstitialAd.adMobInterstitialAd?.let {
-            val interstitialState = AppHarbr.getInterstitialState(ahAdMobInterstitialAd)
-            if (interstitialState != AdStateResult.BLOCKED) {
+        ahAdMobRewardedAd.adMobRewardedAd?.let {
+            val rewardedState = AppHarbr.getRewardedState(ahAdMobRewardedAd)
+            if (rewardedState != AdStateResult.BLOCKED) {
                 Log.d(
                     "LOG",
-                    "**************************** AppHarbr Permit to Display Admob Interstitial ****************************"
+                    "**************************** AppHarbr Permit to Display Admob Rewarded ****************************"
                 )
-                it.show(this)
+                it.show(this) { rewardItem: RewardItem ->
+                    Log.d(
+                        "TAG",
+                        "onUserEarnedReward: $rewardItem"
+                    )
+                }
             } else {
                 Log.d(
                     "LOG",
-                    "**************************** AppHarbr Blocked Admob Interstitial ****************************"
+                    "**************************** AppHarbr Blocked Admob Rewarded ****************************"
                 )
-                // You may call to reload interstitial
+                // You may call to reload Rewarded
             }
-        } ?: Log.d("TAG", "The Admob interstitial wasn't loaded yet.")
+        } ?: Log.d("TAG", "The Admob Rewarded wasn't loaded yet.")
     }
 
-    var ahListener =
+    private var ahListener =
         AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
