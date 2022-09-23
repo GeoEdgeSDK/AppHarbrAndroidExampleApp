@@ -63,7 +63,7 @@ class AdmobRewardedActivity : ComponentActivity() {
 
     private fun prepareAppHarbrWrapperListener() {
         //      **** (1) ****
-        // The publisher will initiate the listener wrapper and will use it when load the GAM Rewarded Ad.
+        // The publisher will initiate the listener wrapper and will use it when load the Admob Rewarded Ad.
         ahWrapperListener = AppHarbr.addRewardedAd<RewardedAdLoadCallback>(
             AdSdk.ADMOB,
             ahAdMobRewardedAd,
@@ -74,7 +74,7 @@ class AdmobRewardedActivity : ComponentActivity() {
 
     private fun requestAd() {
         //      **** (2) ****
-        //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
+        //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor rewarded Ad
         RewardedAd.load(
             applicationContext,
             applicationContext.resources.getString(R.string.admob_rewarded_ad_unit_id),

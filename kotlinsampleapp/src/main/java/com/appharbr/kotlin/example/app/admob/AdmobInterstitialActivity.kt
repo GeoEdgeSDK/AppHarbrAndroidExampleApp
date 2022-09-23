@@ -63,7 +63,7 @@ class AdmobInterstitialActivity : ComponentActivity() {
 
     private fun prepareAppHarbrWrapperListener() {
         //      **** (1) ****
-        // The publisher will initiate the listener wrapper and will use it when load the GAM Interstitial Ad.
+        // The publisher will initiate the listener wrapper and will use it when load the Admob Interstitial Ad.
         ahWrapperListener = AppHarbr.addInterstitial<InterstitialAdLoadCallback>(
             AdSdk.ADMOB,
             ahAdMobInterstitialAd,

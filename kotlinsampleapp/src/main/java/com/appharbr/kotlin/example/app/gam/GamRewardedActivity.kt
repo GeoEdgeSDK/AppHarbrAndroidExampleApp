@@ -74,7 +74,7 @@ class GamRewardedActivity : ComponentActivity() {
 
     private fun requestAd() {
         //      **** (2) ****
-        //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
+        //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor rewarded Ad
         RewardedAd.load(
             applicationContext,
             applicationContext.resources.getString(R.string.gam_rewarded_ad_unit_id),
