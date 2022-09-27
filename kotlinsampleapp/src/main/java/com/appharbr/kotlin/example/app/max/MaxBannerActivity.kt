@@ -17,6 +17,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.appharbr.kotlin.example.app.R
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 import com.appharbr.sdk.engine.AdBlockReason
+import com.appharbr.sdk.engine.AdSdk
+import com.appharbr.sdk.engine.AppHarbr
 import com.appharbr.sdk.engine.adformat.AdFormat
 import com.appharbr.sdk.engine.listeners.AHListener
 import com.applovin.mediation.MaxAd
@@ -56,14 +58,29 @@ class MaxBannerActivity : ComponentActivity() {
 
     @Composable
     private fun AddBanner() {
+        //We need AndroidView to add banner in Compose UI
         AndroidView(modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .height(50.dp),
             factory = { context ->
+
+                //      **** (1) ****
+                //      Add Banner View in compose with all necessary params, like unit id and ad listener
                 MaxAdView("YOUR_AD_UNIT_ID", context).apply {
                     setListener(mAdListener)
+
+                    //      **** (2) ****
+                    //Add Max's banner View instance for Monitoring
+                    AppHarbr.addBannerView(
+                        AdSdk.MAX,
+                        this,
+                        lifecycle,
+                        ahListener
+                    )
+
+                    //      **** (3) ****
+                    //      Request for the Ads
                     loadAd()
-                    startAutoRefresh()
                 }
             }
         )
