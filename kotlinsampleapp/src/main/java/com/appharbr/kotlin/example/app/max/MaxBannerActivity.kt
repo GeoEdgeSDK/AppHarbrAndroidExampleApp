@@ -112,7 +112,7 @@ class MaxBannerActivity : ComponentActivity() {
         }
 
         override fun onAdLoadFailed(adUnitId: String, error: MaxError) {
-            Log.d("LOG", "Max - onAdLoadFailed: " + error.getMessage() + " => " + error.getCode())
+            Log.d("LOG", "Max - onAdLoadFailed: " + error.message + " => " + error.code)
         }
 
         override fun onAdDisplayFailed(ad: MaxAd, error: MaxError) {

@@ -16,10 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.appharbr.kotlin.example.app.gam.GamBannerActivity
-import com.appharbr.kotlin.example.app.gam.GamInterstitialActivity
-import com.appharbr.kotlin.example.app.gam.GamNativeAdActivity
-import com.appharbr.kotlin.example.app.gam.GamRewardedActivity
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 
 class MaxMediationActivity : ComponentActivity() {
