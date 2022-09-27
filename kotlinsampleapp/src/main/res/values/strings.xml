@@ -13,6 +13,7 @@
     <string name="max_banner_screen">Max Banner Sample</string>
     <string name="max_interstitial_screen">Max Interstitial Sample</string>
     <string name="max_rewarded_screen">Max Rewarded Sample</string>
+    <string name="max_native_screen">Max Native Sample</string>
 
     <!-- TODO: This is an ad unit ID for a test ad. Replace with your own banner ad unit id. -->
     <string name="gam_banner_ad_unit_id">/6499/example/banner</string>
