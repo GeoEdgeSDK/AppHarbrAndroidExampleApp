@@ -78,6 +78,26 @@
             android:name=".admob.AdmobNativeAdActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".max.MaxBannerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".max.MaxInterstitialActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".max.MaxRewardedActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".max.MaxNativeAdActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".max.MaxBannerLazyColumnActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

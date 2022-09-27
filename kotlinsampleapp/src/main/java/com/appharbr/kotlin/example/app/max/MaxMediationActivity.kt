@@ -44,10 +44,11 @@ class MaxMediationActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        AdFormatButton("Banner", GamBannerActivity::class.java)
-                        AdFormatButton("Interstitial", GamInterstitialActivity::class.java)
-                        AdFormatButton("Rewarded", GamRewardedActivity::class.java)
-                        AdFormatButton("Native", GamNativeAdActivity::class.java)
+                        AdFormatButton("Banner", MaxBannerActivity::class.java)
+                        AdFormatButton("Interstitial", MaxInterstitialActivity::class.java)
+                        AdFormatButton("Rewarded", MaxRewardedActivity::class.java)
+                        AdFormatButton("Native", MaxNativeAdActivity::class.java)
+                        AdFormatButton("Banner in LazyColumn", MaxBannerLazyColumnActivity::class.java)
 
                     }
                 }
