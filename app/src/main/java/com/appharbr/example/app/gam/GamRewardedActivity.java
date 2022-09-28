@@ -59,8 +59,8 @@ public class GamRewardedActivity extends AppCompatActivity {
                 return;
             }
             if (ahGamRewardedAd.getGamRewardedAd() != null) {
-                final AdStateResult interstitialState = AppHarbr.getRewardedState(ahGamRewardedAd);
-                if (interstitialState != AdStateResult.BLOCKED) {
+                final AdStateResult rewardedState = AppHarbr.getRewardedState(ahGamRewardedAd);
+                if (rewardedState != AdStateResult.BLOCKED) {
                     Log.d("LOG", "**************************** AppHarbr Permit to Display GAM Rewarded ****************************");
                     ahGamRewardedAd.getGamRewardedAd().show(GamRewardedActivity.this,
                             rewardItem -> Log.d("TAG",  "onUserEarnedReward: " + rewardItem));
