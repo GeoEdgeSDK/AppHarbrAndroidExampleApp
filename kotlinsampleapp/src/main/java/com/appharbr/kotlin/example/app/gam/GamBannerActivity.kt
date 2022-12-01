@@ -68,7 +68,6 @@ class GamBannerActivity : ComponentActivity() {
                 //      **** (1) ****
                 //      Add Banner View in compose with all necessary params, like unit id and ad listener
                 AdManagerAdView(context).apply {
-                    adSize = AdSize.BANNER
                     adUnitId = unitID
                     adListener = mAdListener
 
@@ -80,7 +79,7 @@ class GamBannerActivity : ComponentActivity() {
                         lifecycle,
                         ahListener
                     )
-
+                    setAdSize(AdSize.BANNER)
                     //      **** (3) ****
                     //      Request for the Ads
                     loadAd(AdManagerAdRequest.Builder().build())
@@ -116,7 +115,7 @@ class GamBannerActivity : ComponentActivity() {
     }
 
     private val ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+        AHListener { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
                 "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(

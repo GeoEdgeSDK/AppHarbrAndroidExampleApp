@@ -75,12 +75,14 @@ class GamRewardedActivity : ComponentActivity() {
     private fun requestAd() {
         //      **** (2) ****
         //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor rewarded Ad
-        RewardedAd.load(
-            applicationContext,
-            applicationContext.resources.getString(R.string.gam_rewarded_ad_unit_id),
-            AdRequest.Builder().build(),
-            ahWrapperListener
-        )
+        ahWrapperListener?.let {
+            RewardedAd.load(
+                applicationContext,
+                applicationContext.resources.getString(R.string.gam_rewarded_ad_unit_id),
+                AdRequest.Builder().build(),
+                it
+            )
+        }
     }
 
     private val adManagerRewardedAdLoadCallback: RewardedAdLoadCallback =
@@ -125,7 +127,7 @@ class GamRewardedActivity : ComponentActivity() {
     }
 
     private var ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+        AHListener { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
                 "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(

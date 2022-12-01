@@ -74,12 +74,14 @@ class GamInterstitialActivity : ComponentActivity() {
     private fun requestAd() {
         //      **** (2) ****
         //Request to load interstitial Ad and instead of AdManagerInterstitialAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
-        AdManagerInterstitialAd.load(
-            this,
-            applicationContext.resources.getString(R.string.gam_interstitial_ad_unit_id),
-            AdManagerAdRequest.Builder().build(),
-            ahWrapperListener
-        )
+        ahWrapperListener?.let {
+            AdManagerInterstitialAd.load(
+                this,
+                applicationContext.resources.getString(R.string.gam_interstitial_ad_unit_id),
+                AdManagerAdRequest.Builder().build(),
+                it
+            )
+        }
     }
 
     private val adManagerInterstitialAdLoadCallback: AdManagerInterstitialAdLoadCallback =
@@ -120,7 +122,7 @@ class GamInterstitialActivity : ComponentActivity() {
     }
 
     var ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+        AHListener { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
                 "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(

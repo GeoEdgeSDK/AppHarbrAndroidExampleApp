@@ -84,7 +84,7 @@ public class GamCombinationNativeAdWithBannerActivity extends AppCompatActivity 
                     currentBannerAdView = adView;
 
                     // ####### Publisher got a new Banner - Using AppHarbr to monitor it ########
-                    AppHarbr.addBannerViewFromAdLoader(AdSdk.GAM, adView, ahListener);
+                    AppHarbr.addBannerViewFromAdLoader(AdSdk.GAM, adView, getLifecycle(), ahListener);
 
                     FrameLayout frameLayout =
                             findViewById(R.id.fl_adplaceholder);
