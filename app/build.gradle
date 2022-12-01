@@ -33,7 +33,7 @@ android {
 dependencies {
 
     // AppHarbr dependencies
-    implementation files('libs/AH-SDK-Android-2.8.0.aar')
+    implementation files('libs/appharbr-sdk_REPLACE_ME.aar')
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
