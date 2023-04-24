@@ -76,7 +76,6 @@ class AdmobBannerActivity : ComponentActivity() {
                         lifecycle,
                         ahListener
                     )
-                    setAdSize(AdSize.BANNER)
                     //      **** (3) ****
                     //      Request for the Ads
                     loadAd(AdRequest.Builder().build())
