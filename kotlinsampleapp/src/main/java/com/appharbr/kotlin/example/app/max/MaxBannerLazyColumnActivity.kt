@@ -129,7 +129,7 @@ class MaxBannerLazyColumnActivity : ComponentActivity() {
     }
 
     private val ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+        AHListener { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
                 "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(

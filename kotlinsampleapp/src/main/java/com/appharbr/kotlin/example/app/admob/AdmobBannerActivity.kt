@@ -76,7 +76,7 @@ class AdmobBannerActivity : ComponentActivity() {
                         lifecycle,
                         ahListener
                     )
-
+                    setAdSize(AdSize.BANNER)
                     //      **** (3) ****
                     //      Request for the Ads
                     loadAd(AdRequest.Builder().build())
@@ -112,7 +112,7 @@ class AdmobBannerActivity : ComponentActivity() {
     }
 
     private val ahListener =
-        AHListener { view: Any?, unitId: String, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
+        AHListener { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
             Log.d(
                 "LOG",
                 "AppHarbr - onAdBlocked for: $unitId, reason: " + Arrays.toString(
