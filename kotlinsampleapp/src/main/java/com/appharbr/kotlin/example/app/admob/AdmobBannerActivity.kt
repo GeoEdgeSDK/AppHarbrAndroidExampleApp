@@ -64,6 +64,7 @@ class AdmobBannerActivity : ComponentActivity() {
                 //      **** (1) ****
                 //      Add Banner View in compose with all necessary params, like unit id and ad listener
                 AdView(context).apply {
+                    setAdSize(AdSize.BANNER)
                     adUnitId = unitID
                     adListener = mAdListener
 
@@ -75,7 +76,6 @@ class AdmobBannerActivity : ComponentActivity() {
                         lifecycle,
                         ahListener
                     )
-                    setAdSize(AdSize.BANNER)
                     //      **** (3) ****
                     //      Request for the Ads
                     loadAd(AdRequest.Builder().build())

@@ -112,7 +112,7 @@ class GamRewardedActivity : ComponentActivity() {
                 )
                 it.show(this) { rewardItem: RewardItem ->
                     Log.d(
-                        "TAG",
+                        "LOG",
                         "onUserEarnedReward: $rewardItem"
                     )
                 }
