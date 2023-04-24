@@ -68,7 +68,7 @@ class GamBannerActivity : ComponentActivity() {
                 //      **** (1) ****
                 //      Add Banner View in compose with all necessary params, like unit id and ad listener
                 AdManagerAdView(context).apply {
-                    adSize = AdSize.BANNER
+                    setAdSizes(AdSize.BANNER)
                     adUnitId = unitID
                     adListener = mAdListener
 

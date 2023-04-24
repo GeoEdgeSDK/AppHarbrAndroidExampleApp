@@ -75,12 +75,14 @@ class AdmobInterstitialActivity : ComponentActivity() {
     private fun requestAd() {
         //      **** (2) ****
         //Request to load interstitial Ad and instead of AdManagerInterstitialAdLoadCallback we should use ahWrapperListener to monitor interstitial Ad
-        AdManagerInterstitialAd.load(
-            this,
-            applicationContext.resources.getString(R.string.admob_interstitial_ad_unit_id),
-            AdManagerAdRequest.Builder().build(),
-            ahWrapperListener
-        )
+        ahWrapperListener?.let {
+            AdManagerInterstitialAd.load(
+                this,
+                applicationContext.resources.getString(R.string.admob_interstitial_ad_unit_id),
+                AdManagerAdRequest.Builder().build(),
+                it
+            )
+        }
     }
 
     private val interstitialAdLoadCallback: InterstitialAdLoadCallback =

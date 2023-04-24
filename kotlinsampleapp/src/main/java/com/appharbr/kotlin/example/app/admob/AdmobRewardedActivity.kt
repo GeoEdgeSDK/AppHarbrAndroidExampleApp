@@ -75,12 +75,14 @@ class AdmobRewardedActivity : ComponentActivity() {
     private fun requestAd() {
         //      **** (2) ****
         //Request to load rewarded Ad and instead of RewardedAdLoadCallback we should use ahWrapperListener to monitor rewarded Ad
-        RewardedAd.load(
-            applicationContext,
-            applicationContext.resources.getString(R.string.admob_rewarded_ad_unit_id),
-            AdRequest.Builder().build(),
-            ahWrapperListener
-        )
+        ahWrapperListener?.let {
+            RewardedAd.load(
+                applicationContext,
+                applicationContext.resources.getString(R.string.admob_rewarded_ad_unit_id),
+                AdRequest.Builder().build(),
+                it
+            )
+        }
 
     }
 
