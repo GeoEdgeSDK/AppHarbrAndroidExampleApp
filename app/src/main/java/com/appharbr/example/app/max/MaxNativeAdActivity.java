@@ -49,7 +49,7 @@ public class MaxNativeAdActivity extends AppCompatActivity {
 
 		//	**** (3) ****
 		//Check loaded Max native ad from AppHarbr if it needs to be blocked
-		AdResult adResult = AppHarbr.shouldBlockNativeAd(AdSdk.MAX, maxAd);
+		AdResult adResult = AppHarbr.shouldBlockNativeAd(AdSdk.MAX, maxAd, "YOUR_AD_UNIT_ID");
 		if (adResult.getAdStateResult() != AdStateResult.BLOCKED) {
 		    Log.d("LOG", "**************************** AppHarbr Permit to Display Max Native Ad ****************************");
 		    binding.mainLayout.addView(maxNativeAdView);

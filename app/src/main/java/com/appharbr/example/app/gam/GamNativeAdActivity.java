@@ -100,7 +100,7 @@ public class GamNativeAdActivity extends AppCompatActivity {
     private void populateUnifiedNativeAdView(NativeAd nativeAd, NativeAdView adView) {
 
         // Check with AppHarbr if this ad suppose to be display
-        AdResult adResult = AppHarbr.shouldBlockNativeAd(AdSdk.GAM, nativeAd);
+        AdResult adResult = AppHarbr.shouldBlockNativeAd(AdSdk.GAM, nativeAd, getApplicationContext().getResources().getString(R.string.gam_native_ad_unit_id));
         if (adResult.getAdStateResult() == AdStateResult.BLOCKED) {
             // **** AppHarbr Blocked The Native Ad - Do Not Render it. ****
             // May request another ad.
