@@ -62,7 +62,7 @@ class AdmobNativeAdActivity : ComponentActivity() {
             applicationContext.resources.getString(R.string.admob_native_ad_unit_id)
         ).forNativeAd { nativeAd: NativeAd ->
 
-            val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.ADMOB, nativeAd)
+            val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.ADMOB, nativeAd, applicationContext.resources.getString(R.string.admob_native_ad_unit_id))
             when (adResult.adStateResult) {
                 AdStateResult.BLOCKED -> {
                     nativeAdState.value = null

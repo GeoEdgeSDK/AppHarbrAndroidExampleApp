@@ -74,7 +74,7 @@ class MaxNativeAdActivity : ComponentActivity() {
 
                 //	**** (3) ****
                 //Check loaded Max native ad from AppHarbr if it needs to be blocked
-                val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.MAX, maxAd)
+                val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.MAX, maxAd, "YOUR_AD_UNIT_ID")
                 if (adResult.adStateResult != AdStateResult.BLOCKED) {
                     Log.d(
                         "LOG",

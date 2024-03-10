@@ -75,7 +75,7 @@ class GamCombinationNativeAdWithBannerActivity : ComponentActivity() {
             .forNativeAd { nativeAd: NativeAd ->
 
                 // ############ Check with AppHarbr if this ad suppose to be display ################
-                val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.GAM, nativeAd)
+                val adResult = AppHarbr.shouldBlockNativeAd(AdSdk.GAM, nativeAd, applicationContext.resources.getString(R.string.gam_nativebanner_ad_unit_id))
                 if (adResult.adStateResult == AdStateResult.BLOCKED) {
                     // **** AppHarbr Blocked The Native Ad - Do Not Render it. ****
                     // May request another ad.
