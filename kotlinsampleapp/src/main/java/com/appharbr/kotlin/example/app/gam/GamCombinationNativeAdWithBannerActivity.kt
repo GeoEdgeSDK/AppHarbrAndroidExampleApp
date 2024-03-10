@@ -30,6 +30,7 @@ import com.appharbr.sdk.engine.listeners.AHListener
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.admanager.AdManagerAdView
@@ -92,6 +93,9 @@ class GamCombinationNativeAdWithBannerActivity : ComponentActivity() {
             .forAdManagerAdView({ adView: AdManagerAdView ->
 
                 // ####### Publisher got a new Banner - Using AppHarbr to monitor it ########
+                adManagerAdViewState.value?.let {
+                    AppHarbr.removeBannerView(it)
+                }
                 AppHarbr.addBannerViewFromAdLoader(AdSdk.GAM, adView, ahListener)
 
                 adManagerAdViewState.value = adView
