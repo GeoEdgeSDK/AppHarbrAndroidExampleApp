@@ -67,6 +67,7 @@ class GamNativeAdActivity : ComponentActivity() {
                 AdStateResult.BLOCKED -> {
                     nativeAdState.value = null
                     Log.e("LOG", "Native ad was blocked by appharbr")
+                    return@forNativeAd
                 }
                 else -> {}
             }
