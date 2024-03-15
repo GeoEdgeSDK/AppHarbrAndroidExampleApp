@@ -8,6 +8,9 @@ import com.appharbr.sdk.engine.AdSdk
 import com.appharbr.sdk.engine.AppHarbr
 import com.appharbr.sdk.engine.InitializationFailureReason
 import com.appharbr.sdk.engine.listeners.OnAppHarbrInitializationCompleteListener
+import org.prebid.mobile.Host
+import org.prebid.mobile.PrebidMobile
+import org.prebid.mobile.api.data.InitializationStatus
 
 class MainApplication : Application() {
 
@@ -15,6 +18,7 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initPrebid()
         initAppHarbr()
     }
 
@@ -59,12 +63,19 @@ class MainApplication : Application() {
 
     private fun initAppHarbr() {
         // Regular AppHarbr Configuration
-        val ahSdkNormalConfiguration: AHSdkConfiguration = AHSdkConfiguration.Builder(API_KEY).build()
+        val ahSdkNormalConfiguration: AHSdkConfiguration = AHSdkConfiguration
+            .Builder(API_KEY)
+            .withInterstitialAdTimeLimit(10)
+            //.withRewardAdTimeLimit(20)
+            .withMuteAd(true)
+            .withDebugConfig(AHSdkDebug(true, false))
+            .build()
 
         // Alternatively AppHarbr Configuration with BlockAll testing
-        val ahSdkBlockAllTestingConfiguration: AHSdkConfiguration = AHSdkConfiguration.Builder(API_KEY)
-            .withDebugConfig(AHSdkDebug(true).withBlockAll(true))
-            .build()
+        val ahSdkBlockAllTestingConfiguration: AHSdkConfiguration =
+            AHSdkConfiguration.Builder(API_KEY)
+                .withDebugConfig(AHSdkDebug(true).withBlockAll(true))
+                .build()
 
         // Alternatively AppHarbr Configuration with Targeted Ad Networks
 
@@ -90,6 +101,21 @@ class MainApplication : Application() {
                     )
                 }
             })
+    }
+
+    private fun initPrebid() {
+        PrebidMobile.setPrebidServerAccountId("0689a263-318d-448b-a3d4-b02e8a709d9d")
+        PrebidMobile.setPrebidServerHost(Host.createCustomHost("https://prebid-server-test-j.prebid.org/openrtb2/auction"))
+        PrebidMobile.setCustomStatusEndpoint("https://prebid-server-test-j.prebid.org/status")
+
+        PrebidMobile.initializeSdk(applicationContext) { status ->
+            when (status) {
+                InitializationStatus.SUCCEEDED -> Log.d("LOG","Prebid SDK initialized successfully")
+                InitializationStatus.SERVER_STATUS_WARNING -> Log.w("LOG","Prebid Server status checking failed: $status\n${status.description}")
+                else -> Log.e("LOG","SDK initialization error: $status\n${status.description}")
+            }
+        }
+        PrebidMobile.setShareGeoLocation(true)
     }
 
 }
