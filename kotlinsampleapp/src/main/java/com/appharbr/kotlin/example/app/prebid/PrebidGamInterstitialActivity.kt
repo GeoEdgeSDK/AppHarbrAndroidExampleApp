@@ -81,12 +81,12 @@ class PrebidGamInterstitialActivity : ComponentActivity() {
             val adListener = useAppHarbrToMonitorAd()
 
             // Load a GAM interstitial ad
-            if (adListener != null) {
+            adListener?.let { listener ->
                 AdManagerInterstitialAd.load(
                     this,
                     AD_UNIT_ID,
                     request,
-                    adListener
+                    listener
                 )
             }
         }
