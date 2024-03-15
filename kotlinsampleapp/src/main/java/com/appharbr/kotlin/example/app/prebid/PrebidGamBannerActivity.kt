@@ -94,8 +94,12 @@ class PrebidGamBannerActivity : ComponentActivity() {
                     integrateAppHarbr(this)
 
                     //      **** (3) ****
-                    //      Request for the Ads
-                    loadAd(AdManagerAdRequest.Builder().build())
+                    //      Requesting Ad
+                    val request = AdManagerAdRequest.Builder().build()
+                    prebidBannerAdUnit?.fetchDemand(request) {
+                        // Load Ad from GAM
+                        loadAd(request)
+                    }
                 }
             }
         )

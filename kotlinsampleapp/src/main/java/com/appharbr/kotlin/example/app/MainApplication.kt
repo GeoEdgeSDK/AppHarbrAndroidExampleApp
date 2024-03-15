@@ -66,9 +66,7 @@ class MainApplication : Application() {
         val ahSdkNormalConfiguration: AHSdkConfiguration = AHSdkConfiguration
             .Builder(API_KEY)
             .withInterstitialAdTimeLimit(10)
-            //.withRewardAdTimeLimit(20)
             .withMuteAd(true)
-            .withDebugConfig(AHSdkDebug(true, false))
             .build()
 
         // Alternatively AppHarbr Configuration with BlockAll testing
