@@ -163,8 +163,8 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
                 unifiedNativeAd,
                 object : InAppBidding {
                     /**
-                     * In order to fulfil caning process AppHarbr also needs biding object,
-                     * for that  InAppBidding interface can be used to send various biding object to AppHarbr SDK.
+                     * In order to fulfil scanning process AppHarbr also needs bidding object,
+                     * for that InAppBidding interface can be used to send various biding objects to AppHarbr SDK.
                      * In this case we have Prebid native Ad as a bidding object.
                      */
                     override fun getPrebidObject(adFormat: AdFormat, mediationAdUnitId: String) =
@@ -195,8 +195,8 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
                     object : InAppBidding {
 
                         /**
-                         * In order to fulfil caning process AppHarbr also needs biding object,
-                         * for that  InAppBidding interface can be used to send various biding object to AppHarbr SDK.
+                         * In order to fulfil scanning process AppHarbr also needs bidding object,
+                         * for that InAppBidding interface can be used to send various biding objects to AppHarbr SDK.
                          * In this case we have Prebid native Ad as a bidding object.
                          */
                         override fun getPrebidObject(
