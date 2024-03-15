@@ -5,4 +5,4 @@ Steps to activate this Example App:
 2. Rename the aar file to appharbr-sdk.aar
 3. Open MainApplication and set your API KEY
 
-This application will demonstrate how to use AppHarbr SDK with Google Ad Manager (GAM) and AdMob mediations
+This application will demonstrate how to use AppHarbr SDK with Google Ad Manager (GAM) AdMob and Max mediations
