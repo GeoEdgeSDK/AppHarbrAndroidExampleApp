@@ -1,8 +1,7 @@
 package com.appharbr.kotlin.example.app.prebid
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +22,9 @@ import com.appharbr.sdk.engine.AdStateResult
 import com.appharbr.sdk.engine.AppHarbr
 import com.appharbr.sdk.engine.adformat.AdFormat
 import com.appharbr.sdk.engine.adnetworks.inappbidding.InAppBidding
+import com.appharbr.sdk.engine.diagnostic.AHAdAnalyzedResult
+import com.appharbr.sdk.engine.listeners.AHAnalyze
 import com.appharbr.sdk.engine.mediators.gam.rewarded.AHGamRewardedAd
-import com.appharbr.sdk.log.AHLog
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.rewarded.RewardedAd
@@ -35,14 +35,16 @@ import org.prebid.mobile.VideoParameters
 
 class PrebidGamRewardedActivity : ComponentActivity() {
 
+    /**
+     * Credentials to load Rewarded Ad
+     */
     companion object {
         const val AD_UNIT_ID = "/21808260008/prebid-demo-app-original-api-video-interstitial"
         const val CONFIG_ID = "prebid-ita-video-rewarded-320-480-original-api"
     }
 
-    private var adUnit: RewardedVideoAdUnit? = null
+    private var prebidRewardedAdUnit: RewardedVideoAdUnit? = null
     private val ahRewardedAd = AHGamRewardedAd()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,24 +72,28 @@ class PrebidGamRewardedActivity : ComponentActivity() {
     }
 
     private fun createAd() {
-        // 1. Create RewardedVideoAdUnit
-        adUnit = RewardedVideoAdUnit(CONFIG_ID)
+        // Create Prebid RewardedVideoAdUnit
+        prebidRewardedAdUnit = RewardedVideoAdUnit(CONFIG_ID)
 
-        // 2. Configure Video parameters
-        adUnit?.videoParameters = configureVideoParameters()
+        // Configure Video parameters of Prebid Video AD
+        prebidRewardedAdUnit?.videoParameters = configureVideoParameters()
 
-        // 3. Make a bid request to Prebid Server
+        // Make a bid request to Prebid Server
         val request = AdManagerAdRequest.Builder().build()
-        adUnit?.fetchDemand(request) {
+        prebidRewardedAdUnit?.fetchDemand(request) {
 
-            // 4. Load a GAM Rewarded Ad
-            RewardedAd.load(
-                this,
-                AD_UNIT_ID,
-                request,
-                monitorByAppHarbr()!!
-                //defaultCallback()
-            )
+            // We are creating AppHarbr monitor system before loading Ad
+            val adListener = useAppHarbrToMonitorAd()
+
+            //Load a GAM Rewarded Ad
+            adListener?.let { listener ->
+                RewardedAd.load(
+                    this,
+                    AD_UNIT_ID,
+                    request,
+                    listener
+                )
+            }
         }
     }
 
@@ -98,55 +104,127 @@ class PrebidGamRewardedActivity : ComponentActivity() {
         }
     }
 
-    private fun monitorByAppHarbr(): RewardedAdLoadCallback? {
+    private fun useAppHarbrToMonitorAd(): RewardedAdLoadCallback? {
         return AppHarbr.addRewardedAd<RewardedAdLoadCallback>(
             AdSdk.GAM,
             ahRewardedAd,
             object : InAppBidding {
-                override fun getPrebidObject(adFormat: AdFormat, mediationAdUnitId: String) = adUnit
+                /**
+                 * In order to fulfil scanning process AppHarbr also needs bidding object,
+                 * for that InAppBidding interface can be used to send various biding objects to AppHarbr SDK.
+                 * In this case we have Prebid Rewarded Ad as a bidding object.
+                 */
+                override fun getPrebidObject(adFormat: AdFormat, mediationAdUnitId: String) =
+                    prebidRewardedAdUnit
+
                 override fun getNimbusObject(adFormat: AdFormat, mediationAdUnitId: String) = null
             },
+            /**
+             * AppHarbr needs regular Rewarded Ad load callback
+             */
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(rewardedAd: RewardedAd) {
+                    Log.i("LOG", "Prebid Gam Ad was loaded.")
                     ahRewardedAd.setRewardedAd(rewardedAd)
-
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val state = AppHarbr.getRewardedState(ahRewardedAd)
-                        if (state != AdStateResult.BLOCKED) {
-                            ahRewardedAd.gamRewardedAd?.show(this@PrebidGamRewardedActivity) {}
-                        } else {
-                            "AppHarbr Blocked Ad, please reload Ad".let { message ->
-                                AHLog.e(message)
-                            }
-                        }
-                    }, 100)
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     ahRewardedAd.setRewardedAd(null)
-
-                    "Failed to load Prebid: ${loadAdError.cause} | ${loadAdError.code} | ${loadAdError.message} | ${loadAdError.responseInfo}".apply {
-                        AHLog.e("Failed to load Prebid: ${loadAdError.cause} | ${loadAdError.code} | ${loadAdError.message} | ${loadAdError.responseInfo}")
-                    }
+                    Log.e(
+                        "LOG",
+                        "Failed to load Prebid: ${loadAdError.cause} | ${loadAdError.code} | ${loadAdError.message} | ${loadAdError.responseInfo}"
+                    )
                 }
             },
-            lifecycle
-        ) { view: Any?, unitId: String?, adFormat: AdFormat?, reasons: Array<AdBlockReason?>? ->
-            val message =
-                "AppHarbr - on Ad Blocked: view[${view?.javaClass?.simpleName}] unitId[$unitId] adFormat[$adFormat] reasons[${
-                    reasons?.joinToString(
+            lifecycle,
+            ahListener,
+        )
+    }
+
+    /**
+     * All scanning and analyze results with all important parameters
+     * like(Ad object, Ad format, Ad unitID, analyzed result, block reasons, report reasons and creativeID)
+     * from AppHarbr will come into this listener
+     */
+    val ahListener: AHAnalyze = object : AHAnalyze {
+
+        override fun onAdAnalyzed(
+            view: Any?,
+            adFormat: AdFormat,
+            adUnitId: String,
+            result: AHAdAnalyzedResult
+        ) {
+            Log.i(
+                "LOG",
+                "######## AppHarbr onAdAnalyzed Ad: Ad[${view?.javaClass?.simpleName}] unitId[$adUnitId] adFormat[$adFormat] result[$result]"
+            )
+
+            when (result) {
+                AHAdAnalyzedResult.WILL_ANALYZE_ON_DISPLAY -> run {
+                    // This means that AppHarbr will scan Rewarded Ad when it will be shown.
+                    // This displayed Ad will be closed Automatically if AppHarbr blocks this Ad
+                    ahRewardedAd.gamRewardedAd?.show(this@PrebidGamRewardedActivity) {
+                        Log.i("LOG", "User was rewarded: Amount[${it.amount}]")
+                    }
+                }
+
+                AHAdAnalyzedResult.ANALYZED_SUCCESSFULLY_ON_AD_LOAD -> run {
+                    // AppHarbr analyzed Ad successfully, now we need to check result of this analyzes
+                    val analyzedResult = AppHarbr.getRewardedResult(ahRewardedAd)
+                    if (analyzedResult.adStateResult == AdStateResult.BLOCKED) {
+                        Log.w("LOG", "AppHarbr Blocked Ad, please reload Ad")
+                    } else {
+                        ahRewardedAd.gamRewardedAd?.show(this@PrebidGamRewardedActivity) {
+                            Log.i("LOG", "User was rewarded: Amount[${it.amount}]")
+                        }
+                    }
+                }
+
+                AHAdAnalyzedResult.NOT_ANALYZED_UNSUPPORTED_AD_NETWORK_OR_VERSION_MISMATCH -> run {
+                    Log.e("LOG", result.description)
+                }
+            }
+        }
+
+        override fun onAdBlocked(
+            view: Any?,
+            unitId: String?,
+            adFormat: AdFormat,
+            reasons: Array<AdBlockReason>
+        ) {
+            Log.w(
+                "LOG",
+                "######## AppHarbr Blocked Ad: Ad[${view?.javaClass?.simpleName}] unitId[$unitId] adFormat[$adFormat] reasons[${
+                    reasons.joinToString(
+                        separator = ","
+                    )
+                }]\nPlease reload Ad"
+            )
+        }
+
+        override fun onAdIncident(
+            view: Any?,
+            unitId: String?,
+            adNetwork: AdSdk?,
+            creativeId: String?,
+            adFormat: AdFormat,
+            blockReasons: Array<out AdBlockReason>,
+            reportReasons: Array<out AdBlockReason>
+        ) {
+            Log.i(
+                "LOG",
+                "######## AppHarbr onAdIncident: Ad[${view?.javaClass?.simpleName}] unitId[$unitId] adFormat[$adFormat] reasons[${
+                    blockReasons.joinToString(
                         separator = ","
                     )
                 }]"
-
-            AHLog.d(message)
+            )
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-        adUnit?.stopAutoRefresh()
+        prebidRewardedAdUnit?.stopAutoRefresh()
     }
 
 }
