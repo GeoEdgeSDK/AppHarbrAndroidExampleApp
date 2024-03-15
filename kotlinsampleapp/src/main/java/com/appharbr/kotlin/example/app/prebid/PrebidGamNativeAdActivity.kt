@@ -25,7 +25,6 @@ import com.appharbr.sdk.engine.AdStateResult
 import com.appharbr.sdk.engine.AppHarbr
 import com.appharbr.sdk.engine.adformat.AdFormat
 import com.appharbr.sdk.engine.adnetworks.inappbidding.InAppBidding
-import com.appharbr.sdk.log.AHLog
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdSize
@@ -46,19 +45,22 @@ import org.prebid.mobile.addendum.AdViewUtils
 
 class PrebidGamNativeAdActivity : ComponentActivity() {
 
-    private val nativeAdState = mutableStateOf<PrebidNativeAd?>(null)
+    // State of prebid native ad which notifies compose UI to draw native Ad after it is loaded
+    private val prebidNativeAdState = mutableStateOf<PrebidNativeAd?>(null)
 
+    /**
+     * Credentials to load Native Ad
+     */
     companion object {
         const val AD_UNIT_ID = "/21808260008/apollo_custom_template_native_ad_unit"
         const val CONFIG_ID = "prebid-ita-banner-native-styles"
         const val CUSTOM_FORMAT_ID = "11934135"
-        const val TAG = "GamOriginalNativeInApp"
     }
 
-    private var adView: AdManagerAdView? = null
-    private var unifiedNativeAd: NativeAd? = null
-    private var adUnit: NativeAdUnit? = null
+    private var adManagerAdView: AdManagerAdView? = null
+    private var nativeAd: NativeAd? = null
     private var adLoader: AdLoader? = null
+    private var prebidNativeAdUnit: NativeAdUnit? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,28 +86,26 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
     }
 
     private fun createAd() {
-        // 1. Create NativeAdUnit
-        adUnit = NativeAdUnit(CONFIG_ID)
-        adUnit?.setContextType(NativeAdUnit.CONTEXT_TYPE.SOCIAL_CENTRIC)
-        adUnit?.setPlacementType(NativeAdUnit.PLACEMENTTYPE.CONTENT_FEED)
-        adUnit?.setContextSubType(NativeAdUnit.CONTEXTSUBTYPE.GENERAL_SOCIAL)
+        // Create Prebid NativeAdUnit
+        prebidNativeAdUnit = NativeAdUnit(CONFIG_ID)
+        prebidNativeAdUnit?.setContextType(NativeAdUnit.CONTEXT_TYPE.SOCIAL_CENTRIC)
+        prebidNativeAdUnit?.setPlacementType(NativeAdUnit.PLACEMENTTYPE.CONTENT_FEED)
+        prebidNativeAdUnit?.setContextSubType(NativeAdUnit.CONTEXTSUBTYPE.GENERAL_SOCIAL)
 
-        // 2. Add native assets and trackers
-        addNativeAssets(adUnit)
+        // Add native assets and trackers
+        addNativeAssets(prebidNativeAdUnit)
 
-        // 3. Make a bid request to Prebid Server
+        // Make a bid request to Prebid Server
         val adRequest = AdManagerAdRequest.Builder().build()
-        adUnit?.fetchDemand(adRequest) {
+        prebidNativeAdUnit?.fetchDemand(adRequest) {
 
-            // 4. Load a GAM Native Ad
+            // Create Gam Ad loader and load Ad
             adLoader = createAdLoader()
             adLoader?.loadAd(adRequest)
         }
     }
 
     private fun addNativeAssets(adUnit: NativeAdUnit?) {
-        // ADD NATIVE ASSETS
-
         val title = NativeTitleAsset()
         title.setLength(90)
         title.isRequired = true
@@ -137,7 +137,7 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
         cta.dataType = NativeDataAsset.DATA_TYPE.CTATEXT
         adUnit?.addAsset(cta)
 
-        // ADD NATIVE EVENT TRACKERS
+        // Add native event trackers
         val methods = ArrayList<NativeEventTracker.EVENT_TRACKING_METHOD>()
         methods.add(NativeEventTracker.EVENT_TRACKING_METHOD.IMAGE)
         methods.add(NativeEventTracker.EVENT_TRACKING_METHOD.JS)
@@ -151,51 +151,58 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
 
     private fun createAdLoader(): AdLoader {
         val onGamAdLoaded = OnAdManagerAdViewLoadedListener { adManagerAdView: AdManagerAdView ->
-            Log.d(TAG, "Gam loaded")
-            adView = adManagerAdView
-            //wrapper.addView(adManagerAdView)
+            this.adManagerAdView = adManagerAdView
         }
 
         val onUnifiedAdLoaded = NativeAd.OnNativeAdLoadedListener { unifiedNativeAd: NativeAd? ->
-            Log.d(TAG, "Unified native loaded")
-            this.unifiedNativeAd = unifiedNativeAd
+            this.nativeAd = unifiedNativeAd
 
+            // We need to check Native Ad and for that we will use AppHarbr with appropriate parameter to scan loaded native ad
             val state = AppHarbr.shouldBlockNativeAd(
                 AdSdk.GAM,
                 unifiedNativeAd,
                 object : InAppBidding {
+                    /**
+                     * In order to fulfil caning process AppHarbr also needs biding object,
+                     * for that  InAppBidding interface can be used to send various biding object to AppHarbr SDK.
+                     * In this case we have Prebid native Ad as a bidding object.
+                     */
                     override fun getPrebidObject(adFormat: AdFormat, mediationAdUnitId: String) =
-                        adUnit
+                        prebidNativeAdUnit
 
                     override fun getNimbusObject(adFormat: AdFormat, mediationAdUnitId: String) =
                         null
-
-//                    override fun getAmazonObject(adFormat: AdFormat, mediationAdUnitId: String) =
-//                        null
                 },
                 AD_UNIT_ID
             )
 
             if (state.adStateResult == AdStateResult.BLOCKED) {
-                "Native Ad was blocked".apply {
-                    AHLog.e(this)
-                }
+                Log.e(
+                    "LOG",
+                    "Native Ad was blocked by AppHarbr! We should skipp this native Ad and load new one"
+                )
                 return@OnNativeAdLoadedListener
             }
         }
 
         val onCustomAdLoaded =
             NativeCustomFormatAd.OnCustomFormatAdLoadedListener { nativeCustomTemplateAd: NativeCustomFormatAd? ->
-                Log.d(TAG, "Custom ad loaded")
 
+                // We need to check Native Ad and for that we will use AppHarbr with appropriate parameter to scan loaded native ad
                 val state = AppHarbr.shouldBlockNativeAd(
                     AdSdk.GAM,
                     nativeCustomTemplateAd,
                     object : InAppBidding {
+
+                        /**
+                         * In order to fulfil caning process AppHarbr also needs biding object,
+                         * for that  InAppBidding interface can be used to send various biding object to AppHarbr SDK.
+                         * In this case we have Prebid native Ad as a bidding object.
+                         */
                         override fun getPrebidObject(
                             adFormat: AdFormat,
                             mediationAdUnitId: String
-                        ) = adUnit
+                        ) = prebidNativeAdUnit
 
                         override fun getNimbusObject(
                             adFormat: AdFormat,
@@ -205,34 +212,33 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
                     AD_UNIT_ID
                 )
 
-                if (state.adStateResult == AdStateResult.BLOCKED) {
-                    "Native Ad was blocked".apply {
-                        AHLog.e(this)
 
-                    }
+                if (state.adStateResult == AdStateResult.BLOCKED) {
+                    Log.e(
+                        "LOG",
+                        "Native Custom Format Ad was blocked by AppHarbr! We should skipp this native Ad and load new one"
+                    )
                     return@OnCustomFormatAdLoadedListener
                 }
 
-                // 5. Find Prebid Native Ad
+                // Find Prebid Native Ad
                 AdViewUtils.findNative(nativeCustomTemplateAd!!, object : PrebidNativeAdListener {
                     override fun onPrebidNativeLoaded(ad: PrebidNativeAd) {
-
-                        // 6. Render native ad
-                        //inflatePrebidNativeAd(ad, wrapper)
-
-                        nativeAdState.value = ad
+                        //Update state to notify compose UI to dra Native Ad
+                        prebidNativeAdState.value = ad
                     }
 
                     override fun onPrebidNativeNotFound() {
-                        Log.e(TAG, "onPrebidNativeNotFound")
+                        Log.e("LOG", "onPrebidNativeNotFound")
                     }
 
                     override fun onPrebidNativeNotValid() {
-                        Log.e(TAG, "onPrebidNativeNotValid")
+                        Log.e("LOG", "onPrebidNativeNotValid")
                     }
                 })
             }
 
+        // Create Ad load with all required parameters
         return AdLoader.Builder(baseContext, AD_UNIT_ID)
             .forAdManagerAdView(onGamAdLoaded, AdSize.BANNER)
             .forNativeAd(onUnifiedAdLoaded)
@@ -242,16 +248,15 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
             .withAdListener(object : AdListener() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     super.onAdFailedToLoad(loadAdError)
-                    Log.e(TAG, "DFP onAdFailedToLoad")
+                    Log.e("LOG", "onAdFailedToLoad")
                 }
             })
             .build()
     }
 
-
     @Composable
     private fun DisplayNativeAd() {
-        nativeAdState.value?.let {
+        prebidNativeAdState.value?.let {
             Text(text = "Title: ${it.title}")
             Text(text = "Description: ${it.description}")
             Button(onClick = { Log.d("LOG", it.callToAction) }) {
@@ -281,35 +286,11 @@ class PrebidGamNativeAdActivity : ComponentActivity() {
         }
     }
 
-    /*private fun inflatePrebidNativeAd(ad: PrebidNativeAd, wrapper: ViewGroup) {
-
-        val nativeContainer = View.inflate(wrapper.context, R.layout.prebid_native_layout, null)
-        ad.registerView(nativeContainer, object : PrebidNativeAdEventListener {
-            override fun onAdClicked() {}
-            override fun onAdImpression() {}
-            override fun onAdExpired() {}
-        })
-
-        val icon = nativeContainer.findViewById<ImageView>(R.id.imgIcon)
-        icon.load(ad.iconUrl) //ImageUtils.download(ad.iconUrl, icon)
-
-
-        val image = nativeContainer.findViewById<ImageView>(R.id.imgImage)
-        image.load(ad.imageUrl) //ImageUtils.download(ad.imageUrl, image)
-
-
-        val cta = nativeContainer.findViewById<Button>(R.id.btnCta)
-        cta.text = ad.callToAction
-
-        wrapper.addView(nativeContainer)
-    }*/
-
     override fun onDestroy() {
         super.onDestroy()
-        adView?.destroy()
-        adUnit?.stopAutoRefresh()
-        unifiedNativeAd?.destroy()
+        adManagerAdView?.destroy()
+        prebidNativeAdUnit?.stopAutoRefresh()
+        nativeAd?.destroy()
     }
-
 
 }
