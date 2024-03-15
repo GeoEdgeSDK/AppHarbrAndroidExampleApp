@@ -1,4 +1,4 @@
-package com.appharbr.kotlin.example.app
+package com.appharbr.kotlin.example.app.prebid
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,25 +16,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.appharbr.kotlin.example.app.admob.AdmobMediationActivity
-import com.appharbr.kotlin.example.app.gam.GamMediationActivity
-import com.appharbr.kotlin.example.app.max.MaxMediationActivity
-import com.appharbr.kotlin.example.app.prebid.PrebidGamMenuActivity
 import com.appharbr.kotlin.example.app.ui.theme.AppHarbrExampleAppTheme
 
-class MediationsActivity : ComponentActivity() {
+class PrebidGamMenuActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             AppHarbrExampleAppTheme {
-                // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
 
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(
                             15.dp,
                             Alignment.CenterVertically
@@ -42,10 +41,10 @@ class MediationsActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        MediationButton("Google Ad Manager (GAM)", GamMediationActivity::class.java)
-                        MediationButton("Admob", AdmobMediationActivity::class.java)
-                        MediationButton("Max", MaxMediationActivity::class.java)
-                        MediationButton("Prebid Gam", PrebidGamMenuActivity::class.java)
+                        AdFormatButton("Banner", PrebidGamBannerActivity::class.java)
+                        AdFormatButton("Interstitial", PrebidGamInterstitialActivity::class.java)
+                        AdFormatButton("Rewarded", PrebidGamRewardedActivity::class.java)
+                        AdFormatButton("Native", PrebidGamNativeAdActivity::class.java)
 
                     }
                 }
@@ -54,8 +53,8 @@ class MediationsActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun MediationButton(
-        mediationName: String,
+    private fun AdFormatButton(
+        formatName: String,
         activityClass: Class<*>
     ) {
         val context = LocalContext.current
@@ -68,7 +67,7 @@ class MediationsActivity : ComponentActivity() {
                     )
                 )
             }) {
-            Text(text = mediationName)
+            Text(text = formatName)
         }
     }
 
